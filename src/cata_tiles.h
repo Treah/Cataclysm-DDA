@@ -2,28 +2,28 @@
 #ifndef CATA_TILES_H
 #define CATA_TILES_H
 
+#include <cstddef>
 #include <memory>
 #include <map>
-#include <set>
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include <utility>
 
 #include "sdl_wrappers.h"
 #include "animation.h"
 #include "lightmap.h"
 #include "line.h"
 #include "options.h"
-#include "game_constants.h"
 #include "weather.h"
 #include "enums.h"
 #include "weighted_list.h"
+#include "point.h"
 
-class cata_tiles;
 class Creature;
 class player;
+class pixel_minimap;
 class JsonObject;
-struct visibility_variables;
 
 extern void set_displaybuffer_rendertarget();
 
@@ -93,137 +93,6 @@ class texture
         }
 };
 
-extern SDL_Texture_Ptr alt_rect_tex;
-extern bool alt_rect_tex_enabled;
-extern void draw_alt_rect( const SDL_Renderer_Ptr &renderer, const SDL_Rect &rect,
-                           Uint32 r, Uint32 g, Uint32 b );
-
-struct pixel {
-    int r;
-    int g;
-    int b;
-    int a;
-
-    pixel() : r( 0 ), g( 0 ), b( 0 ), a( 0 ) {
-    }
-
-    pixel( int sr, int sg, int sb, int sa = 0xFF ) : r( sr ), g( sg ), b( sb ), a( sa ) {
-    }
-
-    pixel( SDL_Color c ) {
-        r = c.r;
-        g = c.g;
-        b = c.b;
-        a = c.a;
-    }
-
-    SDL_Color getSdlColor() const {
-        SDL_Color c;
-        c.r = static_cast<Uint8>( r );
-        c.g = static_cast<Uint8>( g );
-        c.b = static_cast<Uint8>( b );
-        c.a = static_cast<Uint8>( a );
-        return c;
-    }
-
-    void adjust_brightness( int percent ) {
-        r = std::min( r * percent / 100, 0xFF );
-        g = std::min( g * percent / 100, 0xFF );
-        b = std::min( b * percent / 100, 0xFF );
-    }
-
-    void mix_with( const pixel &other, int percent ) {
-        const int my_percent = 100 - percent;
-        r = std::min( r * my_percent / 100 + other.r * percent / 100, 0xFF );
-        g = std::min( g * my_percent / 100 + other.g * percent / 100, 0xFF );
-        b = std::min( b * my_percent / 100 + other.b * percent / 100, 0xFF );
-    }
-
-    bool isBlack() const {
-        return ( r == 0 && g == 0 && b == 0 );
-    }
-
-    bool operator==( const pixel &other ) const {
-        return ( r == other.r && g == other.g && b == other.b && a == other.a );
-    }
-
-    bool operator!=( const pixel &other ) const {
-        return !operator==( other );
-    }
-};
-
-// a texture pool to avoid recreating textures every time player changes their view
-// at most 142 out of 144 textures can be in use due to regular player movement
-//  (moving from submap corner to new corner) with MAPSIZE = 11
-// textures are dumped when the player moves more than one submap in one update
-//  (teleporting, z-level change) to prevent running out of the remaining pool
-struct minimap_shared_texture_pool {
-    std::vector<SDL_Texture_Ptr> texture_pool;
-    std::set<int> active_index;
-    std::vector<int> inactive_index;
-    minimap_shared_texture_pool() {
-        reinit();
-    }
-
-    void reinit() {
-        inactive_index.clear();
-        texture_pool.resize( ( MAPSIZE + 1 ) * ( MAPSIZE + 1 ) );
-        for( int i = 0; i < static_cast<int>( texture_pool.size() ); i++ ) {
-            inactive_index.push_back( i );
-        }
-    }
-
-    //reserves a texture from the inactive group and returns tracking info
-    SDL_Texture_Ptr request_tex( int &i ) {
-        if( inactive_index.empty() ) {
-            //shouldn't be happening, but minimap will just be default color instead of crashing
-            return nullptr;
-        }
-        int index = inactive_index.back();
-        inactive_index.pop_back();
-        active_index.insert( index );
-        i = index;
-        return std::move( texture_pool[index] );
-    }
-
-    //releases the provided texture back into the inactive pool to be used again
-    //called automatically in the submap cache destructor
-    void release_tex( int i, SDL_Texture_Ptr ptr ) {
-        auto it = active_index.find( i );
-        if( it == active_index.end() ) {
-            return;
-        }
-        inactive_index.push_back( i );
-        active_index.erase( i );
-        texture_pool[i] = std::move( ptr );
-    }
-};
-
-struct minimap_submap_cache {
-    //the color stored for each submap tile
-    std::vector< pixel > minimap_colors;
-    //checks if the submap has been looked at by the minimap routine
-    bool touched;
-    //the texture updates are drawn to
-    SDL_Texture_Ptr minimap_tex;
-    //the submap being handled
-    int texture_index;
-    //the list of updates to apply to the texture
-    //reduces render target switching to once per submap
-    std::vector<point> update_list;
-    //if the submap has been drawn to screen during the current draw cycle
-    bool drawn;
-    //flag used to indicate that the texture needs to be cleared before first use
-    bool ready;
-    minimap_shared_texture_pool &pool;
-
-    //reserve the SEEX * SEEY submap tiles
-    minimap_submap_cache( minimap_shared_texture_pool &pool );
-    minimap_submap_cache( minimap_submap_cache && );
-    //handle the release of the borrowed texture
-    ~minimap_submap_cache();
-};
-
 class tileset
 {
     private:
@@ -245,7 +114,7 @@ class tileset
 
         static const texture *get_if_available( const size_t index,
                                                 const decltype( shadow_tile_values ) &tiles ) {
-            return index < tiles.size() ? &( tiles[index] ) : nullptr;
+            return index < tiles.size() ? & tiles[index] : nullptr;
         }
 
         friend class tileset_loader;
@@ -290,8 +159,7 @@ class tileset_loader
         tileset &ts;
         const SDL_Renderer_Ptr &renderer;
 
-        int sprite_offset_x;
-        int sprite_offset_y;
+        point sprite_offset;
 
         int sprite_width;
         int sprite_height;
@@ -300,11 +168,9 @@ class tileset_loader
         int sprite_id_offset = 0;
         int size = 0;
 
-        struct {
-            int R;
-            int G;
-            int B;
-        };
+        int R;
+        int G;
+        int B;
 
         int tile_atlas_width;
 
@@ -316,7 +182,7 @@ class tileset_loader
 
         void process_variations_after_loading( weighted_int_list<std::vector<int>> &v );
 
-        void add_ascii_subtile( tile_type &curr_tile, const std::string &t_id, int fg,
+        void add_ascii_subtile( tile_type &curr_tile, const std::string &t_id, int sprite_id,
                                 const std::string &s_id );
         void load_ascii_set( JsonObject &entry );
         /**
@@ -336,7 +202,7 @@ class tileset_loader
          * Returns the number of tiles that have been loaded from this tileset image
          * @throw std::exception If the image can not be loaded.
          */
-        void load_tileset( std::string path );
+        void load_tileset( const std::string &path );
         /**
          * Load tiles from json data.This expects a "tiles" array in
          * <B>config</B>. That array should contain all the tile definition that
@@ -381,8 +247,16 @@ struct formatted_text {
         : text( text ), color( color ), alignment( alignment ) {
     }
 
-    formatted_text( const std::string &text, const int color, const direction direction );
+    formatted_text( const std::string &text, int color, direction direction );
 };
+
+/** type used for color blocks overlays.
+ * first: The SDL blend mode used for the color.
+ * second:
+ *     - A point where to draw the color block (x, y)
+ *     - The color of the block at 'point'.
+ */
+using color_block_overlay_container = std::pair<SDL_BlendMode, std::multimap<point, SDL_Color>>;
 
 class cata_tiles
 {
@@ -395,21 +269,23 @@ class cata_tiles
         void set_draw_scale( int scale );
 
     public:
+        void on_options_changed();
+
         /** Draw to screen */
         void draw( int destx, int desty, const tripoint &center, int width, int height,
-                   std::multimap<point, formatted_text> &overlay_strings );
+                   std::multimap<point, formatted_text> &overlay_strings,
+                   color_block_overlay_container &color_blocks );
 
         /** Minimap functionality */
         void draw_minimap( int destx, int desty, const tripoint &center, int width, int height );
-        void draw_rhombus( int destx, int desty, int size, SDL_Color color, int widthLimit,
-                           int heightLimit );
+
     protected:
         /** How many rows and columns of tiles fit into given dimensions **/
-        void get_window_tile_counts( const int width, const int height, int &columns, int &rows ) const;
+        void get_window_tile_counts( int width, int height, int &columns, int &rows ) const;
 
         const tile_type *find_tile_with_season( std::string &id );
         const tile_type *find_tile_looks_like( std::string &id, TILE_CATEGORY category );
-        bool find_overlay_looks_like( const bool male, const std::string &overlay, std::string &draw_id );
+        bool find_overlay_looks_like( bool male, const std::string &overlay, std::string &draw_id );
 
         bool draw_from_id_string( std::string id, const tripoint &pos, int subtile, int rota, lit_level ll,
                                   bool apply_night_vision_goggles );
@@ -430,27 +306,25 @@ class cata_tiles
         bool draw_tile_at( const tile_type &tile, int x, int y, unsigned int loc_rand, int rota,
                            lit_level ll, bool apply_night_vision_goggles, int &height_3d );
 
-        ///@throws std::exception upon errors.
-        ///@returns Always a valid pointer.
-        SDL_Surface_Ptr create_tile_surface();
-
         /* Tile Picking */
-        void get_tile_values( const int t, const int *tn, int &subtile, int &rotation );
+        void get_tile_values( int t, const int *tn, int &subtile, int &rotation );
         void get_connect_values( const tripoint &p, int &subtile, int &rotation, int connect_group );
-        void get_terrain_orientation( const tripoint &p, int &rota, int &subtype );
-        void get_rotation_and_subtile( const char val, int &rota, int &subtype );
+        void get_terrain_orientation( const tripoint &p, int &rota, int &subtile );
+        void get_rotation_and_subtile( char val, int &rota, int &subtile );
 
         /** Drawing Layers */
-        bool apply_vision_effects( const tripoint &pos, const visibility_type visibility );
+        bool apply_vision_effects( const tripoint &pos, visibility_type visibility );
         bool draw_terrain( const tripoint &p, lit_level ll, int &height_3d );
         bool draw_terrain_from_memory( const tripoint &p, int &height_3d );
         bool draw_terrain_below( const tripoint &p, lit_level ll, int &height_3d );
         bool draw_furniture( const tripoint &p, lit_level ll, int &height_3d );
+        bool draw_graffiti( const tripoint &p, lit_level ll, int &height_3d );
         bool draw_trap( const tripoint &p, lit_level ll, int &height_3d );
         bool draw_field_or_item( const tripoint &p, lit_level ll, int &height_3d );
         bool draw_vpart( const tripoint &p, lit_level ll, int &height_3d );
         bool draw_vpart_below( const tripoint &p, lit_level ll, int &height_3d );
         bool draw_critter_at( const tripoint &p, lit_level ll, int &height_3d );
+        bool draw_critter_at_below( const tripoint &p, lit_level ll, int &height_3d );
         bool draw_zone_mark( const tripoint &p, lit_level ll, int &height_3d );
         bool draw_entity( const Creature &critter, const tripoint &p, lit_level ll, int &height_3d );
         void draw_entity_with_overlays( const player &pl, const tripoint &p, lit_level ll, int &height_3d );
@@ -487,6 +361,10 @@ class cata_tiles
         void draw_cursor();
         void void_cursor();
 
+        void init_draw_highlight( const tripoint &p );
+        void draw_highlight();
+        void void_highlight();
+
         void init_draw_weather( weather_printable weather, std::string name );
         void draw_weather_frame();
         void void_weather();
@@ -514,8 +392,6 @@ class cata_tiles
          * @throw std::exception On any error.
          */
         void reinit();
-
-        void reinit_minimap();
 
         int get_tile_height() const {
             return tile_height;
@@ -572,6 +448,7 @@ class cata_tiles
         bool do_draw_hit;
         bool do_draw_line;
         bool do_draw_cursor;
+        bool do_draw_highlight;
         bool do_draw_weather;
         bool do_draw_sct;
         bool do_draw_zones;
@@ -593,6 +470,7 @@ class cata_tiles
         std::string line_endpoint_id;
 
         std::vector<tripoint> cursors;
+        std::vector<tripoint> highlights;
 
         weather_printable anim_weather;
         std::string weather_name;
@@ -602,54 +480,21 @@ class cata_tiles
         tripoint zone_offset;
 
         // offset values, in tile coordinates, not pixels
-        int o_x = 0;
-        int o_y = 0;
+        point o;
         // offset for drawing, in pixels.
-        int op_x = 0;
-        int op_y = 0;
+        point op;
 
     private:
-        int last_pos_x = 0;
-        int last_pos_y = 0;
         /**
          * Tracks active night vision goggle status for each draw call.
          * Allows usage of night vision tilesets during sprite rendering.
          */
         bool nv_goggles_activated;
 
-        //pixel minimap cache methods
-        SDL_Texture_Ptr create_minimap_cache_texture( int tile_width, int tile_height );
-        void process_minimap_cache_updates();
-        void update_minimap_cache( const tripoint &loc, pixel &pix );
-        void prepare_minimap_cache_for_updates();
-        void clear_unused_minimap_cache();
+        std::unique_ptr<pixel_minimap> minimap;
 
-        //the minimap texture pool which is used to reduce new texture allocation spam
-        minimap_shared_texture_pool tex_pool;
-        std::map<tripoint, minimap_submap_cache> minimap_cache;
-
-        //persistent tiled minimap values
-        void init_minimap( int destx, int desty, int width, int height );
-        bool minimap_prep;
-        point minimap_min;
-        point minimap_max;
-        point minimap_tiles_range;
-        point minimap_tile_size;
-        point minimap_tiles_limit;
-        int minimap_drawn_width;
-        int minimap_drawn_height;
-        int minimap_border_width;
-        int minimap_border_height;
-        SDL_Rect minimap_clip_rect;
-        //track the previous viewing area to determine if the minimap cache needs to be cleared
-        tripoint previous_submap_view;
-        bool minimap_reinit_flag; //set to true to force a reallocation of minimap details
-        //place all submaps on this texture before rendering to screen
-        //replaces clipping rectangle usage while SDL still has a flipped y-coordinate bug
-        SDL_Texture_Ptr main_minimap_tex;
-        // SDL_RenderFillRect replacement handler
-        void handle_draw_rect( const SDL_Renderer_Ptr &renderer, const SDL_Rect &rect,
-                               Uint32 r, Uint32 g, Uint32 b );
+    public:
+        std::string memory_map_mode = "color_pixel_sepia";
 };
 
 #endif

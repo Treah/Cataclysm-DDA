@@ -2,13 +2,16 @@
 #ifndef POPUP_H
 #define POPUP_H
 
+#include <cstddef>
 #include <functional>
 #include <string>
 #include <vector>
+#include <utility>
 
 #include "cursesdef.h"
 #include "input.h"
 #include "color.h"
+#include "string_formatter.h"
 
 /**
  * UI class for displaying messages or querying player input with popups.
@@ -207,8 +210,7 @@ class query_popup
             button( const std::string &text, int x, int y );
 
             std::string text;
-            int x;
-            int y;
+            point pos;
         };
 
         // UI caches

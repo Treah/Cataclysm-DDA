@@ -1,7 +1,11 @@
 #include "skill.h"
 
+#include <cstddef>
 #include <algorithm>
 #include <iterator>
+#include <array>
+#include <memory>
+#include <utility>
 
 #include "debug.h"
 #include "item.h"
@@ -42,15 +46,15 @@ bool string_id<Skill>::is_valid() const
     return &obj() != &invalid_skill;
 }
 
-Skill::Skill() : Skill( skill_id::NULL_ID(), "nothing", "The zen-most skill there is.",
+Skill::Skill() : Skill( skill_id::NULL_ID(), translation( "nothing" ),
+                            translation( "The zen-most skill there is." ),
                             std::set<std::string> {} )
 {
 }
 
-Skill::Skill( skill_id ident, std::string name, std::string description,
-              std::set<std::string> tags )
-    : _ident( std::move( ident ) ), _name( std::move( name ) ),
-      _description( std::move( description ) ), _tags( std::move( tags ) )
+Skill::Skill( const skill_id &ident, const translation &name, const translation &description,
+              const std::set<std::string> &tags )
+    : _ident( ident ), _name( name ), _description( description ), _tags( tags )
 {
 }
 
@@ -84,9 +88,10 @@ void Skill::load_skill( JsonObject &jsobj )
         return s._ident == ident;
     } ), end( skills ) );
 
-    const Skill sk( ident, _( jsobj.get_string( "name" ).c_str() ),
-                    _( jsobj.get_string( "description" ).c_str() ),
-                    jsobj.get_tags( "tags" ) );
+    translation name, desc;
+    jsobj.read( "name", name );
+    jsobj.read( "description", desc );
+    const Skill sk( ident, name, desc, jsobj.get_tags( "tags" ) );
 
     if( sk.is_contextual_skill() ) {
         contextual_skills[sk.ident()] = sk;
@@ -142,7 +147,7 @@ void SkillLevel::train( int amount, bool skip_scaling )
     } else {
         const double scaling = get_option<float>( "SKILL_TRAINING_SPEED" );
         if( scaling > 0.0 ) {
-            _exercise += divide_roll_remainder( amount * scaling, 1.0 );
+            _exercise += roll_remainder( amount * scaling );
         }
     }
 
@@ -222,7 +227,7 @@ bool SkillLevel::can_train() const
 
 const SkillLevel &SkillLevelMap::get_skill_level_object( const skill_id &ident ) const
 {
-    static const SkillLevel null_skill;
+    static const SkillLevel null_skill{};
 
     if( ident && ident->is_contextual_skill() ) {
         debugmsg( "Skill \"%s\" is context-dependent. It cannot be assigned.", ident.str() );
@@ -263,7 +268,7 @@ int SkillLevelMap::get_skill_level( const skill_id &ident ) const
 
 int SkillLevelMap::get_skill_level( const skill_id &ident, const item &context ) const
 {
-    auto id = context.is_null() ? ident : context.contextualize_skill( ident );
+    const auto id = context.is_null() ? ident : context.contextualize_skill( ident );
     return get_skill_level( id );
 }
 
@@ -316,8 +321,8 @@ bool SkillLevelMap::has_recipe_requirements( const recipe &rec ) const
     return exceeds_recipe_requirements( rec ) >= 0;
 }
 
-//Actually take the difference in barter skill between the two parties involved
-//Caps at 200% when you are 5 levels ahead, int comparison is handled in npctalk.cpp
+// Actually take the difference in barter skill between the two parties involved
+// Caps at 200% when you are 5 levels ahead, int comparison is handled in npctalk.cpp
 double price_adjustment( int barter_skill )
 {
     if( barter_skill <= 0 ) {
@@ -336,6 +341,7 @@ double price_adjustment( int barter_skill )
         case 4:
             return 1.65;
         default:
-            return 1.0;//should never occur
+            // Should never occur
+            return 1.0;
     }
 }

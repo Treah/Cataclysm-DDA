@@ -6,7 +6,7 @@
     "name_plural": "Boxing Monthlies",
     "description": "An exciting monthly magazine about boxing.  There are lots of large, colorful photos of pugilistic exploits.",
     "weight": 90,
-    "volume": 1,
+    "volume": "250 ml",
     "price": 450,
     "material": [ "paper" ],
     "symbol": "?",
@@ -14,7 +14,7 @@
     "skill": "unarmed",
     "max_level": 1,
     "intelligence": 5,
-    "time": 8,
+    "time": "8 m",
     "fun": 1
   },
   {
@@ -24,7 +24,7 @@
     "name_plural": "101 Wrestling Moves",
     "description": "It seems to be a wrestling manual, poorly photocopied and released on spiral- bound paper.  Still, there are lots of useful tips for unarmed combat.",
     "weight": 227,
-    "volume": 2,
+    "volume": "500 ml",
     "price": 3800,
     "material": [ "paper" ],
     "symbol": "?",
@@ -32,6 +32,6 @@
     "skill": "unarmed",
     "max_level": 3,
     "intelligence": 3,
-    "time": 15
+    "time": "15 m"
   }
 ]

@@ -5634,7 +5634,7 @@
           "rotates": false
         },
         {
-          "id": "potato_raw",
+          "id": "potato",
           "fg": 940,
           "bg": 621,
           "rotates": false
@@ -8872,7 +8872,7 @@
           "rotates": false
         },
         {
-          "id": "potato_irradiated",
+          "id": "irradiated_potato",
           "fg": 940,
           "bg": 621
         },
@@ -17382,7 +17382,7 @@
           "rotates": false
         },
         {
-          "id": "cooking_oil",
+          "id": [ "cooking_oil", "cooking_oil2" ],
           "fg": 805,
           "rotates": false
         },
@@ -20954,6 +20954,11 @@
           "rotates": false
         },
         {
+          "id": "highlight",
+          "fg": 1947,
+          "rotates": false
+        },
+        {
           "id": "line_target",
           "bg": 1947,
           "rotates": false
@@ -22746,11 +22751,7 @@
           "rotates": false
         },
         {
-          "id": "tr_shotgun_2",
-          "fg": 2851
-        },
-        {
-          "id": "tr_shotgun_1",
+          "id": [ "tr_shotgun_2", "tr_shotgun_2_1", "tr_shotgun_1" ],
           "fg": 2851
         },
         {

@@ -18,10 +18,6 @@ if (localPropertiesFile.exists()) {
 }
 
 def njobs = getProperty("j")
-def luaBinary = 'lua'
-if( localProperties.getProperty('luaBinary') != null ) {
-	luaBinary = localProperties.getProperty('luaBinary') 
-}
 
 task unzipDeps(type: Copy) {
     def zipFile = new File('./deps.zip')
@@ -39,13 +35,7 @@ switch(OperatingSystem.current()) {
             commandLine 'make', 'localization', 'LANGUAGES=all'
         }
 
-        task makeLuaBindings(type: Exec) {
-            workingDir './jni/src/lua'
-            commandLine luaBinary, 'generate_bindings.lua'
-        }
-
         preBuild.dependsOn makeLocalization
-        preBuild.dependsOn makeLuaBindings
         break
     case OperatingSystem.WINDOWS:
         task makeLocalization(type: Exec) {
@@ -53,19 +43,12 @@ switch(OperatingSystem.current()) {
             commandLine 'sh.exe', 'android/app/makelocalizations.sh'
         }
 
-        task makeLuaBindings(type: Exec) {
-            workingDir './../../src/lua'
-            commandLine luaBinary, 'generate_bindings.lua'
-        }
         unzipDeps.dependsOn makeLocalization
-        preBuild.dependsOn makeLuaBindings
         break
 }
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "28.0.1"
-
+    compileSdkVersion 28
 
     if(OperatingSystem.current().isLinux()) {
         exec {
@@ -82,17 +65,28 @@ android {
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 26
-        versionCode 1
+        targetSdkVersion 28
+        versionCode Integer.valueOf(System.env.UPSTREAM_BUILD_NUMBER ?: 1 )
         versionName new File('app/jni/src/version.h').text.split("\"")[1]
         if (buildAsApplication) {
             applicationId "com.cleverraven.cataclysmdda"
             setProperty("archivesBaseName", "cataclysmdda-" + versionName)
         }
-	ndk {
-		abiFilters "armeabi-v7a"
-        //abiFilters "x86" // use this for testing on emulators
-	}
+
+    splits {
+        // Configures multiple APKs based on ABI.
+        abi {
+            // Enables building multiple APKs per ABI.
+            enable true
+            // Resets the list of ABIs that Gradle should create APKs for to none.
+            reset()
+            // Specifies a list of ABIs that Gradle should create APKs for.
+            include "armeabi-v7a"
+            // Specifies that we do not want to also generate a universal APK that includes all ABIs.
+            universalApk false
+        }
+    }
+
     externalNativeBuild {
         ndkBuild {
             arguments "APP_PLATFORM=android-16", "-j$njobs"
@@ -127,11 +121,11 @@ android {
                 }
             }
         }
-        
+
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        
+
             externalNativeBuild {
                 ndkBuild {
 
@@ -148,12 +142,12 @@ android {
                 path 'jni/Android.mk'
             }
         }
-       
+
     }
     lintOptions {
         abortOnError false
     }
-    
+
     if (buildAsLibrary) {
         libraryVariants.all { variant ->
             variant.outputs.each { output ->

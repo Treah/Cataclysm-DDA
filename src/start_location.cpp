@@ -1,16 +1,15 @@
 #include "start_location.h"
 
+#include <climits>
 #include <algorithm>
-#include <chrono>
-#include <random>
+#include <memory>
 
+#include "avatar.h"
 #include "coordinate_conversions.h"
 #include "debug.h"
-#include "enums.h"
 #include "field.h"
 #include "game.h"
 #include "generic_factory.h"
-#include "json.h"
 #include "map.h"
 #include "map_extras.h"
 #include "mapdata.h"
@@ -18,13 +17,22 @@
 #include "overmap.h"
 #include "overmapbuffer.h"
 #include "player.h"
+#include "calendar.h"
+#include "game_constants.h"
+#include "int_id.h"
+#include "pldata.h"
+#include "rng.h"
+#include "translations.h"
+#include "point.h"
+
+class item;
 
 const efftype_id effect_bleed( "bleed" );
 
 namespace
 {
 generic_factory<start_location> all_starting_locations( "starting location", "ident" );
-}
+} // namespace
 
 /** @relates string_id */
 template<>
@@ -52,7 +60,7 @@ const string_id<start_location> &start_location::ident() const
 
 std::string start_location::name() const
 {
-    return _( _name.c_str() );
+    return _( _name );
 }
 
 std::string start_location::target() const
@@ -88,7 +96,7 @@ void start_location::reset()
 }
 
 // check if tile at p should be boarded with some kind of furniture.
-void add_boardable( map &m, const tripoint &p, std::vector<tripoint> &vec )
+static void add_boardable( const map &m, const tripoint &p, std::vector<tripoint> &vec )
 {
     if( m.has_furn( p ) ) {
         // Don't need to board this up, is already occupied
@@ -109,7 +117,7 @@ void add_boardable( map &m, const tripoint &p, std::vector<tripoint> &vec )
     vec.push_back( p );
 }
 
-void board_up( map &m, const tripoint &start, const tripoint &end )
+static void board_up( map &m, const tripoint &start, const tripoint &end )
 {
     std::vector<tripoint> furnitures1;
     std::vector<tripoint> furnitures2;
@@ -122,7 +130,7 @@ void board_up( map &m, const tripoint &start, const tripoint &end )
     for( x = start.x; x < end.x; x++ ) {
         for( y = start.y; y < end.y; y++ ) {
             bool must_board_around = false;
-            const ter_id t = m.ter( x, y );
+            const ter_id t = m.ter( point( x, y ) );
             if( t == t_window_domestic || t == t_window || t == t_window_no_curtains ) {
                 // Windows are always to the outside and must be boarded
                 must_board_around = true;
@@ -182,7 +190,7 @@ void board_up( map &m, const tripoint &start, const tripoint &end )
         m.furn_set( fp, f_null );
         auto destination_items = m.i_at( bp );
         for( const item &moved_item : m.i_at( fp ) ) {
-            destination_items.push_back( moved_item );
+            destination_items.insert( moved_item );
         }
         m.i_clear( fp );
     }
@@ -204,9 +212,9 @@ tripoint start_location::find_player_initial_location() const
     popup_nowait( _( "Please wait as we build your world" ) );
     // Spiral out from the world origin scanning for a compatible starting location,
     // creating overmaps as necessary.
-    const int radius = 32;
+    const int radius = 3;
     for( const point &omp : closest_points_first( radius, point_zero ) ) {
-        overmap &omap = overmap_buffer.get( omp.x, omp.y );
+        overmap &omap = overmap_buffer.get( omp );
         const tripoint omtstart = omap.find_random_omt( target() );
         if( omtstart != overmap::invalid_tripoint ) {
             return omtstart + point( omp.x * OMAPX, omp.y * OMAPY );
@@ -220,9 +228,9 @@ tripoint start_location::find_player_initial_location() const
 void start_location::prepare_map( const tripoint &omtstart ) const
 {
     // Now prepare the initial map (change terrain etc.)
-    const point player_location = omt_to_sm_copy( omtstart.x, omtstart.y );
+    const point player_location = omt_to_sm_copy( omtstart.xy() );
     tinymap player_start;
-    player_start.load( player_location.x, player_location.y, omtstart.z, false );
+    player_start.load( tripoint( player_location, omtstart.z ), false );
     prepare_map( player_start );
     player_start.save();
 }
@@ -235,9 +243,9 @@ void start_location::prepare_map( const tripoint &omtstart ) const
  * Maybe TODO: Allow "picking up" items or parts of bashable furniture
  *             and using them to help with bash attempts.
  */
-int rate_location( map &m, const tripoint &p, const bool must_be_inside,
-                   const int bash_str, const int attempt,
-                   int ( &checked )[MAPSIZE_X][MAPSIZE_Y] )
+static int rate_location( map &m, const tripoint &p, const bool must_be_inside,
+                          const int bash_str, const int attempt,
+                          int ( &checked )[MAPSIZE_X][MAPSIZE_Y] )
 {
     if( ( must_be_inside && m.is_outside( p ) ) ||
         m.impassable( p ) ||
@@ -299,6 +307,7 @@ void start_location::place_player( player &u ) const
     u.setx( HALF_MAPSIZE_X );
     u.sety( HALF_MAPSIZE_Y );
     u.setz( g->get_levz() );
+    m.invalidate_map_cache( m.get_abs_sub().z );
     m.build_map_cache( m.get_abs_sub().z );
     const bool must_be_inside = flags().count( "ALLOW_OUTSIDE" ) == 0;
     ///\EFFECT_STR allows player to start behind less-bashable furniture and terrain
@@ -358,7 +367,7 @@ void start_location::burn( const tripoint &omtstart,
 {
     const tripoint player_location = omt_to_sm_copy( omtstart );
     tinymap m;
-    m.load( player_location.x, player_location.y, player_location.z, false );
+    m.load( player_location, false );
     m.build_outside_cache( m.get_abs_sub().z );
     const int ux = g->u.posx() % HALF_MAPSIZE_X;
     const int uy = g->u.posy() % HALF_MAPSIZE_Y;
@@ -385,15 +394,14 @@ void start_location::burn( const tripoint &omtstart,
     m.save();
 }
 
-void start_location::add_map_special( const tripoint &omtstart,
-                                      const std::string &map_special ) const
+void start_location::add_map_extra( const tripoint &omtstart,
+                                    const std::string &map_extra ) const
 {
     const tripoint player_location = omt_to_sm_copy( omtstart );
     tinymap m;
-    m.load( player_location.x, player_location.y, player_location.z, false );
+    m.load( player_location, false );
 
-    const auto ptr = MapExtras::get_function( map_special );
-    ptr( m, player_location );
+    MapExtras::apply_function( map_extra, m, player_location );
 
     m.save();
 }
@@ -401,24 +409,27 @@ void start_location::add_map_special( const tripoint &omtstart,
 void start_location::handle_heli_crash( player &u ) const
 {
     for( int i = 2; i < num_hp_parts; i++ ) { // Skip head + torso for balance reasons.
-        auto part = hp_part( i );
-        auto bp_part = u.hp_to_bp( part );
-        int roll = int( rng( 1, 8 ) );
+        const auto part = static_cast<hp_part>( i );
+        const auto bp_part = player::hp_to_bp( part );
+        const int roll = static_cast<int>( rng( 1, 8 ) );
         switch( roll ) {
+            // Damage + Bleed
             case 1:
-            case 2:// Damage + Bleed
+            case 2:
                 u.add_effect( effect_bleed, 6_minutes, bp_part );
             /* fallthrough */
             case 3:
             case 4:
-            case 5: { // Just damage
-                auto maxHp = u.get_hp_max( part );
+            // Just damage
+            case 5: {
+                const auto maxHp = u.get_hp_max( part );
                 // Body part health will range from 33% to 66% with occasional bleed
-                int dmg = int( rng( maxHp / 3, maxHp * 2 / 3 ) );
+                const int dmg = static_cast<int>( rng( maxHp / 3, maxHp * 2 / 3 ) );
                 u.apply_damage( nullptr, bp_part, dmg );
                 break;
             }
-            default: // No damage
+            // No damage
+            default:
                 break;
         }
     }
@@ -428,10 +439,10 @@ static void add_monsters( const tripoint &omtstart, const mongroup_id &type, flo
 {
     const tripoint spawn_location = omt_to_sm_copy( omtstart );
     tinymap m;
-    m.load( spawn_location.x, spawn_location.y, spawn_location.z, false );
+    m.load( spawn_location, false );
     // map::place_spawns internally multiplies density by rng(10, 50)
-    float density = expected_points / ( ( 10 + 50 ) / 2 );
-    m.place_spawns( type, 1, 0, 0, SEEX * 2 - 1, SEEY * 2 - 1, density );
+    const float density = expected_points / ( ( 10 + 50 ) / 2.0 );
+    m.place_spawns( type, 1, point_zero, point( SEEX * 2 - 1, SEEY * 2 - 1 ), density );
     m.save();
 }
 

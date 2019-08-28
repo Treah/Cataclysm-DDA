@@ -6,7 +6,7 @@
     "name_plural": "The Art of Glassblowing",
     "description": "A textbook that illustrates the science and technique of the ancient art of glassblowing.",
     "weight": 1620,
-    "volume": 5,
+    "volume": "1250 ml",
     "price": 4500,
     "bashing": 4,
     "material": [ "paper" ],
@@ -16,7 +16,7 @@
     "required_level": 4,
     "max_level": 7,
     "intelligence": 8,
-    "time": 30
+    "time": "30 m"
   },
   {
     "id": "jewelry_book",
@@ -25,7 +25,7 @@
     "name_plural": "Antique Adornments",
     "description": "A comprehensive and illustrated history of crown, bracelet, necklace and others.",
     "weight": 600,
-    "volume": 5,
+    "volume": "1250 ml",
     "price": 2000,
     "material": [ "paper" ],
     "symbol": "?",
@@ -34,7 +34,7 @@
     "required_level": 6,
     "max_level": 6,
     "intelligence": 8,
-    "time": 60
+    "time": "60 m"
   },
   {
     "id": "mag_fabrication",
@@ -43,7 +43,7 @@
     "name_plural": "Crafty Crafter's Quarterly",
     "description": "A fun quarterly magazine all about macaroni art and things you can make by supergluing found objects together.",
     "weight": 60,
-    "volume": 1,
+    "volume": "250 ml",
     "price": 450,
     "material": [ "paper" ],
     "symbol": "?",
@@ -51,7 +51,7 @@
     "skill": "fabrication",
     "max_level": 1,
     "intelligence": 5,
-    "time": 8,
+    "time": "8 m",
     "fun": 2
   },
   {
@@ -61,7 +61,7 @@
     "name_plural": "101 Crafts for Beginners",
     "description": "A large, paperback book detailing a hundred and one beginner's projects in fabrication.",
     "weight": 510,
-    "volume": 3,
+    "volume": "750 ml",
     "price": 2200,
     "material": [ "paper" ],
     "symbol": "?",
@@ -69,7 +69,7 @@
     "skill": "fabrication",
     "max_level": 3,
     "intelligence": 5,
-    "time": 16,
+    "time": "16 m",
     "fun": 1
   },
   {
@@ -79,7 +79,7 @@
     "name_plural": "The Fletcher's Friend",
     "description": "This hefty book is devoted to folks looking to handcraft their own arrows.  It starts with a hip and snappy disclaimer about the risks, both physical and legal, of using explosives and flammable materials.  Look for its companion, \"The Bowyer's Buddy\"!",
     "weight": 1454,
-    "volume": 5,
+    "volume": "1250 ml",
     "price": 4800,
     "material": [ "paper" ],
     "symbol": "?",
@@ -88,7 +88,7 @@
     "required_level": 2,
     "max_level": 4,
     "intelligence": 8,
-    "time": 30
+    "time": "30 m"
   },
   {
     "id": "recipe_bows",
@@ -97,7 +97,7 @@
     "name_plural": "The Bowyer's Buddy",
     "description": "This hefty book is dedicated to craftsfolk and outdoors-y types looking to make their own bows.  It recommends its companion volume \"The Fletcher's Friend\" for instructions on producing their ammunition.",
     "weight": 1454,
-    "volume": 5,
+    "volume": "1250 ml",
     "price": 4800,
     "material": [ "paper" ],
     "symbol": "?",
@@ -106,7 +106,7 @@
     "required_level": 3,
     "max_level": 5,
     "intelligence": 8,
-    "time": 30
+    "time": "30 m"
   },
   {
     "id": "recipe_bullets",
@@ -115,7 +115,7 @@
     "name_plural": "The Handloader's Helper",
     "description": "Everything you could ever want to know about handloading ammunition, sealed with a ...childproof cover.  Apparently a liability thing, because the chapter on explosive rounds covers them in excellent detail too.",
     "weight": 1454,
-    "volume": 6,
+    "volume": "1500 ml",
     "price": 12000,
     "material": [ "paper" ],
     "symbol": "?",
@@ -124,7 +124,7 @@
     "required_level": 3,
     "max_level": 6,
     "intelligence": 9,
-    "time": 30
+    "time": "30 m"
   },
   {
     "id": "recipe_caseless",
@@ -132,7 +132,7 @@
     "name": "Rivtech design binder",
     "description": "This Rivtech binder warns that \"Unauthorized readers are our best test subjects.\" With good reason: it contains complete design specs and technical drawings for their entire line of products.",
     "weight": 1409,
-    "volume": 2,
+    "volume": "500 ml",
     "price": 84000,
     "material": [ "paper" ],
     "symbol": "?",
@@ -141,7 +141,7 @@
     "required_level": 6,
     "max_level": 7,
     "intelligence": 12,
-    "time": 45,
+    "time": "45 m",
     "fun": 1
   },
   {
@@ -151,7 +151,7 @@
     "name_plural": "lab journals-Gustav",
     "description": "This paper notebook is mostly full of boring logs, experimental observations and notes.  Mixed in, however, are musings on how to use the lab's vapor deposition machine to deposit amorphous carbon in a diamond-like form onto common metals.  The author's intended goal was a better non-stick frying pan, but you can think of a couple of better uses for it.",
     "weight": 2000,
-    "volume": 2,
+    "volume": "500 ml",
     "price": 50000,
     "material": [ "paper" ],
     "symbol": "?",
@@ -160,7 +160,7 @@
     "required_level": 9,
     "max_level": 10,
     "intelligence": 12,
-    "time": 45,
+    "time": "45 m",
     "fun": -1
   },
   {
@@ -169,7 +169,7 @@
     "name": "The Streetfighter's Sidekick",
     "description": "A sizable how-to guide for making hand-to-hand combat weapons.  Though the processes are thoroughly detailed and several illustrations are provided, they rely heavily on technical jargon.  More for machinists-turned-weaponsmiths than streetfighters, really.",
     "weight": 954,
-    "volume": 6,
+    "volume": "1500 ml",
     "price": 8300,
     "material": [ "paper" ],
     "symbol": "?",
@@ -178,7 +178,7 @@
     "required_level": 5,
     "max_level": 6,
     "intelligence": 8,
-    "time": 20
+    "time": "20 m"
   },
   {
     "id": "recipe_mininuke_launch",
@@ -187,7 +187,7 @@
     "name_plural": "238-NK: Practicality Enhancement",
     "description": "The authors of this thoroughly researched and documented proposal make a very persuasive case for the adoption of spring-driven nuclear shells.  It's stamped \"DENIED\".",
     "weight": 854,
-    "volume": 6,
+    "volume": "1500 ml",
     "price": 30000,
     "material": [ "paper" ],
     "symbol": "?",
@@ -196,7 +196,7 @@
     "required_level": 4,
     "max_level": 5,
     "intelligence": 9,
-    "time": 10
+    "time": "10 m"
   },
   {
     "id": "textbook_armeast",
@@ -205,7 +205,7 @@
     "name_plural": "The Art of Japanese Armormaking",
     "description": "This in-depth and technical text details various forms of ancient Japanese armor crafting, and is well illustrated with lots of photos.",
     "weight": 654,
-    "volume": 5,
+    "volume": "1250 ml",
     "price": 6400,
     "material": [ "paper" ],
     "symbol": "?",
@@ -214,7 +214,7 @@
     "required_level": 5,
     "max_level": 10,
     "intelligence": 9,
-    "time": 60,
+    "time": "60 m",
     "fun": -1
   },
   {
@@ -224,7 +224,7 @@
     "name_plural": "Arms and Armor of Imperial China",
     "description": "This textbook details the military history of ancient China, with a particular focus on the nature of historical arms and armor.  It also details some of the equipment used by other cultures that came into conflict with the empire over various dynasties.",
     "weight": 654,
-    "volume": 5,
+    "volume": "1250 ml",
     "price": 6400,
     "material": "paper",
     "symbol": "?",
@@ -233,7 +233,7 @@
     "required_level": 5,
     "max_level": 10,
     "intelligence": 9,
-    "time": 55,
+    "time": "55 m",
     "fun": -1
   },
   {
@@ -243,7 +243,7 @@
     "name_plural": "Studies in Historic Armorsmithing",
     "description": "This in-depth and technical text details various forms of ancient European armor crafting, and is well illustrated with lots of photos.",
     "weight": 654,
-    "volume": 5,
+    "volume": "1250 ml",
     "price": 6400,
     "material": [ "paper" ],
     "symbol": "?",
@@ -252,7 +252,7 @@
     "required_level": 5,
     "max_level": 10,
     "intelligence": 9,
-    "time": 60,
+    "time": "60 m",
     "fun": -1
   },
   {
@@ -261,7 +261,7 @@
     "name": "DIY Compendium",
     "description": "A thick, hardbound book detailing countless projects for inventions that claim to improve all aspects of life.",
     "weight": 2100,
-    "volume": 7,
+    "volume": "1750 ml",
     "price": 4500,
     "bashing": 4,
     "material": [ "paper" ],
@@ -271,7 +271,7 @@
     "required_level": 3,
     "max_level": 6,
     "intelligence": 8,
-    "time": 30
+    "time": "30 m"
   },
   {
     "id": "textbook_fireman",
@@ -280,7 +280,7 @@
     "name_plural": "A History of Firefighting",
     "description": "This in-depth and technical text details the history of firefighting from ancient times into the modern era, with a focus on the technology used to save lives.",
     "weight": 528,
-    "volume": 4,
+    "volume": "1 L",
     "price": 6500,
     "material": [ "paper" ],
     "symbol": "?",
@@ -289,7 +289,7 @@
     "required_level": 7,
     "max_level": 9,
     "intelligence": 8,
-    "time": 10
+    "time": "10 m"
   },
   {
     "id": "textbook_gaswarfare",
@@ -298,7 +298,7 @@
     "name_plural": "Art and Science of Chemical Warfare",
     "description": "This in-depth and technical text covers the design, development, dissemination of, and defenses against various chemical weapons throughout the centuries.  The photographs the author chose make it a difficult read at times, though the information is top-notch.",
     "weight": 854,
-    "volume": 6,
+    "volume": "1500 ml",
     "price": 400,
     "material": [ "paper" ],
     "symbol": "?",
@@ -307,7 +307,7 @@
     "required_level": 4,
     "max_level": 7,
     "intelligence": 9,
-    "time": 10,
+    "time": "10 m",
     "fun": -2
   },
   {
@@ -317,7 +317,7 @@
     "name_plural": "The Swords of the Samurai",
     "description": "This in-depth and technical text details various forms of ancient Japanese sword smithing, and is well illustrated with step by step photo instructions.",
     "weight": 654,
-    "volume": 5,
+    "volume": "1250 ml",
     "price": 6400,
     "material": [ "paper" ],
     "symbol": "?",
@@ -326,7 +326,7 @@
     "required_level": 5,
     "max_level": 10,
     "intelligence": 9,
-    "time": 55,
+    "time": "55 m",
     "fun": -1
   },
   {
@@ -336,7 +336,7 @@
     "name_plural": "The Historic Weaponsmith",
     "description": "This in-depth and technical text details various forms of ancient European weapon smithing, and is well illustrated with step by step photo instructions.",
     "weight": 654,
-    "volume": 5,
+    "volume": "1250 ml",
     "price": 6400,
     "material": [ "paper" ],
     "symbol": "?",
@@ -345,7 +345,7 @@
     "required_level": 5,
     "max_level": 10,
     "intelligence": 9,
-    "time": 55,
+    "time": "55 m",
     "fun": -1
   },
   {
@@ -355,7 +355,7 @@
     "name_plural": "Welding and Metallurgy",
     "description": "A rather technical textbook that illustrates the science and technique of becoming a better welder.",
     "weight": 2100,
-    "volume": 7,
+    "volume": "1750 ml",
     "price": 6500,
     "bashing": 4,
     "material": [ "paper" ],
@@ -365,7 +365,7 @@
     "required_level": 4,
     "max_level": 7,
     "intelligence": 9,
-    "time": 30
+    "time": "30 m"
   },
   {
     "id": "101_carpentry",
@@ -374,7 +374,7 @@
     "name_plural": "101 Home Repairs",
     "description": "A paperback book detailing 101 home repair projects the novice carpenter.",
     "weight": 454,
-    "volume": 2,
+    "volume": "500 ml",
     "price": 1800,
     "material": [ "paper" ],
     "symbol": "?",
@@ -382,7 +382,7 @@
     "skill": "fabrication",
     "max_level": 2,
     "intelligence": 5,
-    "time": 16
+    "time": "16 m"
   },
   {
     "id": "carpentry_book",
@@ -391,7 +391,7 @@
     "name_plural": "Complete Home Repair Guides",
     "description": "A massive book that details virtually every aspect of remodeling and repairing a home, with concise terminology aimed at experienced carpenters.",
     "weight": 2490,
-    "volume": 8,
+    "volume": "2 L",
     "price": 8200,
     "bashing": 8,
     "material": [ "paper" ],
@@ -401,7 +401,7 @@
     "required_level": 5,
     "max_level": 8,
     "intelligence": 9,
-    "time": 55,
+    "time": "55 m",
     "fun": -1
   },
   {
@@ -411,7 +411,7 @@
     "name_plural": "Birdhouse Monthlies",
     "description": "A riveting periodical all about birdhouses and their construction.",
     "weight": 60,
-    "volume": 1,
+    "volume": "250 ml",
     "price": 450,
     "material": [ "paper" ],
     "symbol": "?",
@@ -419,7 +419,7 @@
     "skill": "fabrication",
     "max_level": 1,
     "intelligence": 5,
-    "time": 8,
+    "time": "8 m",
     "fun": 1
   },
   {
@@ -429,7 +429,7 @@
     "name_plural": "Building for Beginners",
     "description": "A large, paperback book detailing several beginner's projects in construction.",
     "weight": 454,
-    "volume": 2,
+    "volume": "500 ml",
     "price": 2200,
     "material": [ "paper" ],
     "symbol": "?",
@@ -437,7 +437,7 @@
     "skill": "fabrication",
     "max_level": 3,
     "intelligence": 5,
-    "time": 16
+    "time": "16 m"
   },
   {
     "id": "textbook_carpentry",
@@ -446,7 +446,7 @@
     "name_plural": "Engineering 301",
     "description": "A textbook on civil engineering and construction.",
     "weight": 1587,
-    "volume": 6,
+    "volume": "1500 ml",
     "price": 6500,
     "bashing": 4,
     "material": [ "paper" ],
@@ -456,7 +456,7 @@
     "required_level": 3,
     "max_level": 6,
     "intelligence": 8,
-    "time": 30,
+    "time": "30 m",
     "fun": -1
   }
 ]

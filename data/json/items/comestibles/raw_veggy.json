@@ -13,10 +13,10 @@
     "description": "Grainy cereal used for malting.  A staple of brewing everywhere.  It can also be ground into flour.",
     "price": 20,
     "material": "veggy",
-    "volume": 4,
-    "flags": [ "EDIBLE_FROZEN" ],
+    "volume": "1 L",
+    "flags": [ "EDIBLE_FROZEN", "MILLABLE" ],
     "charges": 4,
-    "vitamins": [ [ "calcium", 1 ], [ "iron", 7 ] ],
+    "vitamins": [ [ "calcium", 6 ], [ "iron", 29 ] ],
     "fun": -15
   },
   {
@@ -32,7 +32,7 @@
     "color": "white",
     "symbol": ",",
     "material": [ "veggy" ],
-    "volume": 1,
+    "volume": "250 ml",
     "price": 0
   },
   {
@@ -50,10 +50,10 @@
     "description": "It's a bit tough, but quite delicious.",
     "price": 400,
     "material": "veggy",
-    "volume": 1,
+    "volume": "250 ml",
     "flags": [ "EATEN_HOT", "SMOKABLE" ],
     "smoking_result": "dry_veggy",
-    "vitamins": [ [ "vitA", 1 ], [ "vitC", 23 ], [ "calcium", 1 ], [ "iron", 1 ] ]
+    "vitamins": [ [ "vitA", 3 ], [ "vitC", 95 ], [ "calcium", 5 ], [ "iron", 4 ] ]
   },
   {
     "type": "COMESTIBLE",
@@ -70,10 +70,10 @@
     "description": "Seeds from a wild buckwheat plant.  Not particularly good to eat in their raw state, they are commonly cooked or ground into flour.",
     "price": 90,
     "material": "veggy",
-    "volume": 2,
-    "flags": [ "EDIBLE_FROZEN" ],
+    "volume": "500 ml",
+    "flags": [ "EDIBLE_FROZEN", "MILLABLE" ],
     "charges": 2,
-    "vitamins": [ [ "iron", 6 ] ],
+    "vitamins": [ [ "calcium", 3 ], [ "iron", 22 ] ],
     "fun": -10
   },
   {
@@ -91,12 +91,33 @@
     "description": "Crisp white cabbage.",
     "price": 100,
     "material": "veggy",
-    "volume": 9,
+    "volume": "2250 ml",
     "charges": 9,
     "fun": -2,
     "flags": [ "SMOKABLE" ],
     "smoking_result": "dry_veggy",
-    "vitamins": [ [ "vitC", 13 ], [ "calcium", 1 ], [ "iron", 1 ] ]
+    "vitamins": [ [ "vitC", 56 ], [ "calcium", 5 ], [ "iron", 5 ] ]
+  },
+  {
+    "type": "COMESTIBLE",
+    "id": "spinach",
+    "name": "spinach",
+    "name_plural": "spinach",
+    "weight": 139,
+    "color": "green",
+    "spoils_in": "8 days",
+    "comestible_type": "FOOD",
+    "symbol": "%",
+    "quench": 2,
+    "healthy": 1,
+    "calories": 30,
+    "description": "A bunch of spinach leaves.",
+    "price": 100,
+    "material": "veggy",
+    "volume": "2250 ml",
+    "charges": 9,
+    "fun": -2,
+    "vitamins": [ [ "calcium", 8 ], [ "iron", 18 ] ]
   },
   {
     "type": "COMESTIBLE",
@@ -118,7 +139,7 @@
     "fun": -1,
     "flags": [ "SMOKABLE" ],
     "smoking_result": "dry_veggy",
-    "vitamins": [ [ "vitA", 15 ], [ "vitC", 1 ] ]
+    "vitamins": [ [ "vitA", 63 ], [ "vitC", 5 ], [ "calcium", 3 ], [ "iron", 1 ] ]
   },
   {
     "type": "COMESTIBLE",
@@ -134,9 +155,9 @@
     "description": "A stout branching rhizome from a cattail plant.  Its crisp white flesh is very starchy and fibrous, but you really ought to cook it before you attempt to eat it.",
     "price": 0,
     "material": "veggy",
-    "volume": 1,
+    "volume": "250 ml",
     "fun": -12,
-    "vitamins": [ [ "iron", 3 ] ]
+    "vitamins": [ [ "iron", 8 ] ]
   },
   {
     "type": "COMESTIBLE",
@@ -152,9 +173,11 @@
     "description": "A stiff green stalk from a cattail plant.  It is starchy and fibrous, but it would be much better if you cooked it.",
     "price": 0,
     "material": "veggy",
-    "volume": 1,
+    "volume": "250 ml",
     "fun": -8,
-    "vitamins": [ [ "calcium", 1 ], [ "iron", 1 ] ]
+    "flags": [ "SMOKABLE" ],
+    "smoking_result": "dry_veggy",
+    "vitamins": [ [ "calcium", 5 ], [ "iron", 5 ] ]
   },
   {
     "type": "COMESTIBLE",
@@ -170,10 +193,10 @@
     "description": "Neither tasty nor very nutritious, but it goes well with salad.",
     "price": 200,
     "material": "veggy",
-    "volume": 1,
+    "volume": "250 ml",
     "flags": [ "FREEZERBURN", "SMOKABLE" ],
     "smoking_result": "dry_veggy",
-    "vitamins": [ [ "vitC", 1 ], [ "calcium", 1 ] ]
+    "vitamins": [ [ "vitA", 3 ], [ "vitC", 4 ], [ "calcium", 4 ], [ "iron", 1 ] ]
   },
   {
     "type": "COMESTIBLE",
@@ -191,9 +214,10 @@
     "price": 170,
     "//": "Thinking this is a single ear here.",
     "material": "veggy",
-    "volume": 3,
-    "flags": [ "EATEN_HOT" ],
-    "vitamins": [ [ "vitC", 3 ], [ "iron", 1 ] ]
+    "volume": "750 ml",
+    "flags": [ "EATEN_HOT", "SMOKABLE" ],
+    "smoking_result": "dry_veggy",
+    "vitamins": [ [ "vitA", 2 ], [ "vitC", 12 ], [ "iron", 4 ] ]
   },
   {
     "type": "COMESTIBLE",
@@ -211,7 +235,7 @@
     "description": "A tough protective capsule bulging with densely packed fibers and seeds, this cotton boll can be processed into usable material with the right tools.",
     "price": 100,
     "material": [ "veggy", "cotton" ],
-    "volume": 1,
+    "volume": "250 ml",
     "charges": 4,
     "fun": -10
   },
@@ -229,10 +253,10 @@
     "description": "Spicy chili pepper.",
     "price": 50,
     "material": "veggy",
-    "volume": 1,
+    "volume": "250 ml",
     "charges": 3,
     "flags": [ "FREEZERBURN" ],
-    "vitamins": [ [ "vitC", 20 ] ],
+    "vitamins": [ [ "vitA", 3 ], [ "vitC", 88 ], [ "calcium", 1 ], [ "iron", 3 ] ],
     "fun": -2
   },
   {
@@ -250,9 +274,10 @@
     "description": "Comes from the gourd family.  Not tasty but very juicy.",
     "price": 300,
     "material": "veggy",
-    "volume": 3,
-    "flags": [ "FREEZERBURN" ],
-    "vitamins": [ [ "vitC", 2 ], [ "calcium", 1 ], [ "iron", 1 ] ]
+    "volume": "750 ml",
+    "flags": [ "FREEZERBURN", "SMOKABLE" ],
+    "smoking_result": "dry_veggy",
+    "vitamins": [ [ "vitC", 9 ], [ "calcium", 6 ], [ "iron", 6 ] ]
   },
   {
     "type": "COMESTIBLE",
@@ -264,11 +289,66 @@
     "comestible_type": "FOOD",
     "symbol": "%",
     "calories": 60,
-    "description": "The starchy root of a dahlia flower.  When cooked, it is delicious.",
+    "description": "The large, tuberous root of a dahlia flower.  It smells spicy, but is too starchy to eat without cooking.",
     "price": 100,
     "material": "veggy",
-    "volume": 1,
-    "fun": -4
+    "volume": "250 ml",
+    "fun": -4,
+    "//": "Dahlia roots contain an incredible amount of vitamin B6. This isn't a vitamin tracked in Cataclysm, but be careful of vitamin overdose when eating dahlia in real life."
+  },
+  {
+    "type": "COMESTIBLE",
+    "id": "salsify_raw",
+    "name": "salsify",
+    "name_plural": "handfuls of salsify",
+    "weight": 133,
+    "color": "green",
+    "spoils_in": "30 days",
+    "comestible_type": "FOOD",
+    "symbol": "%",
+    "calories": 109,
+    "description": "An herb with a small purple flower.  The roots are nutritious, but tough and bland until cooked.",
+    "//": "Serving Size is 1 cup of sliced roots. Salsify grows in bountiful clumps, it's a weed.",
+    "price": 75,
+    "material": "veggy",
+    "volume": "250 ml",
+    "fun": -2,
+    "smoking_result": "dry_veggy",
+    "vitamins": [ [ "vitC", 18 ], [ "iron", 5 ], [ "calcium", 8 ] ],
+    "rot_spawn": "GROUP_ROTTING_PLANT"
+  },
+  {
+    "type": "COMESTIBLE",
+    "id": "chicory_raw",
+    "name": "chicory",
+    "name_plural": "handfuls of chicory",
+    "weight": 60,
+    "color": "cyan",
+    "spoils_in": "30 days",
+    "comestible_type": "FOOD",
+    "symbol": "%",
+    "calories": 43,
+    "description": "A modest blue flower.  The flower's roots are very bitter and not meant to be eaten raw.",
+    "price": 110,
+    "material": "veggy",
+    "volume": "250 ml",
+    "fun": -8,
+    "vitamins": [ [ "vitC", 5 ], [ "iron", 3 ], [ "calcium", 2 ] ],
+    "rot_spawn": "GROUP_ROTTING_PLANT"
+  },
+  {
+    "type": "COMESTIBLE",
+    "id": "carrot_wild",
+    "name": "wild root",
+    "name_plural": "wild roots",
+    "copy-from": "carrot",
+    "color": "white",
+    "description": "A weed with a cluster of tiny white flowers.  These are often wild carrots, but beware of poisonous lookalikes.",
+    "charges": 3,
+    "//": "Also known as Queen Anne's Lace. It's that boring white flower that grows wild everywhere. Water hemlock looks almost exactly like wild carrot. The easiest way to tell them apart is by their scent. Please don't eat either of them at home, hemlock will kill you deader than Socrates.",
+    "flags": [ "FORAGE_POISON" ],
+    "price": 90,
+    "fun": -2
   },
   {
     "type": "COMESTIBLE",
@@ -285,7 +365,7 @@
     "color": "magenta",
     "symbol": ",",
     "material": [ "veggy" ],
-    "volume": 1,
+    "volume": "250 ml",
     "price": 0
   },
   {
@@ -305,7 +385,7 @@
     "material": "garlic",
     "volume": "25 ml",
     "fun": -18,
-    "vitamins": [ [ "vitC", 1 ] ],
+    "vitamins": [ [ "vitC", 5 ], [ "calcium", 3 ], [ "iron", 1 ] ],
     "//": "Who in their right mind would eat an entire garlic bulb raw?"
   },
   {
@@ -323,7 +403,7 @@
     "description": "A cluster of small cone-like flowers, indispensable for brewing beer.",
     "price": 20,
     "material": "veggy",
-    "volume": 1,
+    "volume": "250 ml",
     "flags": [ "EDIBLE_FROZEN" ],
     "charges": 4,
     "fun": -15
@@ -342,10 +422,11 @@
     "description": "A crisp head of iceberg lettuce.",
     "price": 100,
     "material": "veggy",
-    "volume": 10,
+    "volume": "2500 ml",
     "charges": 10,
     "flags": [ "FREEZERBURN", "SMOKABLE" ],
-    "smoking_result": "dry_veggy"
+    "smoking_result": "dry_veggy",
+    "vitamins": [ [ "vitA", 16 ], [ "vitC", 4 ], [ "calcium", 1 ], [ "iron", 2 ] ]
   },
   {
     "type": "COMESTIBLE",
@@ -361,7 +442,7 @@
     "color": "magenta",
     "symbol": ",",
     "material": [ "veggy" ],
-    "volume": 1,
+    "volume": "250 ml",
     "price": 0
   },
   {
@@ -378,34 +459,37 @@
     "description": "An aromatic onion used in cooking.  Cutting these up can make your eyes sting!",
     "price": 50,
     "material": "veggy",
-    "volume": 1,
+    "volume": "250 ml",
     "fun": -1,
     "flags": [ "FREEZERBURN", "SMOKABLE" ],
     "smoking_result": "dry_veggy",
     "//": "Raw onions probably aren't all that tasty to most people.",
-    "vitamins": [ [ "vitC", 3 ] ]
+    "vitamins": [ [ "vitC", 12 ], [ "calcium", 4 ], [ "iron", 2 ] ]
   },
   {
     "type": "COMESTIBLE",
     "id": "plant_sac",
-    "name": "fluid sac",
+    "name": "fungal fluid sac",
     "weight": 278,
     "color": "light_green",
     "spoils_in": "3 days 8 hours",
-    "//": "wild veggetables as a reference",
+    "//": "wild vegetables as a reference",
+    "//2": "Legacy note: This is no longer a plant item drop, it only comes from fungaloids.",
     "comestible_type": "FOOD",
     "symbol": "%",
     "quench": 18,
     "healthy": -1,
     "calories": 35,
-    "description": "A fluid bladder from a plant based lifeform.  Not very nutritious, but fine to eat anyway.",
+    "description": "A fluid bladder from a fungus based lifeform.  Not very nutritious, but fine to eat anyway.",
     "price": 0,
     "material": "veggy",
-    "volume": 1
+    "volume": "250 ml",
+    "flags": [ "SMOKABLE" ],
+    "smoking_result": "dry_veggy"
   },
   {
     "type": "COMESTIBLE",
-    "id": "potato_raw",
+    "id": "potato",
     "name": "raw potato",
     "name_plural": "raw potatoes",
     "weight": 210,
@@ -422,7 +506,7 @@
     "fun": -3,
     "flags": [ "FREEZERBURN", "SMOKABLE" ],
     "smoking_result": "dry_veggy",
-    "vitamins": [ [ "vitC", 11 ], [ "iron", 2 ] ]
+    "vitamins": [ [ "vitC", 47 ], [ "calcium", 3 ], [ "iron", 9 ] ]
   },
   {
     "type": "COMESTIBLE",
@@ -439,11 +523,13 @@
     "description": "A large vegetable, about the size of your head.  Not very tasty raw, but is great for cooking.",
     "price": 250,
     "material": "veggy",
-    "volume": 12,
+    "volume": "3 L",
     "charges": 12,
     "bashing": 2,
     "fun": -1,
-    "vitamins": [ [ "vitA", 14 ], [ "vitC", 3 ], [ "iron", 1 ] ]
+    "flags": [ "SMOKABLE" ],
+    "smoking_result": "dry_veggy",
+    "vitamins": [ [ "vitA", 58 ], [ "vitC", 12 ], [ "calcium", 3 ], [ "iron", 5 ] ]
   },
   {
     "type": "COMESTIBLE",
@@ -460,11 +546,12 @@
     "description": "A collection of freshly picked yellow dandelions.  In their current raw state they are quite bitter.",
     "price": 60,
     "material": "veggy",
-    "volume": 1,
+    "volume": "250 ml",
     "stack_size": 4,
     "fun": -12,
-    "flags": [ "FREEZERBURN" ],
-    "vitamins": [ [ "vitA", 8 ], [ "vitC", 6 ], [ "calcium", 2 ], [ "iron", 2 ] ]
+    "flags": [ "FREEZERBURN", "SMOKABLE" ],
+    "smoking_result": "dry_veggy",
+    "vitamins": [ [ "vitA", 33 ], [ "vitC", 23 ], [ "calcium", 11 ], [ "iron", 10 ] ]
   },
   {
     "type": "COMESTIBLE",
@@ -481,8 +568,10 @@
     "description": "Sour stems of the rhubarb plant, often used in baking pies.",
     "price": 410,
     "material": "veggy",
-    "volume": 1,
-    "vitamins": [ [ "vitC", 2 ], [ "calcium", 2 ] ]
+    "volume": "250 ml",
+    "flags": [ "SMOKABLE" ],
+    "smoking_result": "dry_veggy",
+    "vitamins": [ [ "vitA", 1 ], [ "vitC", 11 ], [ "calcium", 11 ], [ "iron", 2 ] ]
   },
   {
     "type": "COMESTIBLE",
@@ -498,10 +587,12 @@
     "description": "This fleshy root is ripe and flowing with sugars; just takes some processing to extract them.",
     "price": 50,
     "material": "veggy",
-    "volume": 4,
+    "volume": "1 L",
     "charges": 4,
     "fun": -10,
-    "vitamins": [ [ "vitC", 2 ], [ "iron", 1 ] ]
+    "flags": [ "SMOKABLE" ],
+    "smoking_result": "dry_veggy",
+    "vitamins": [ [ "vitC", 8 ], [ "calcium", 2 ], [ "iron", 6 ] ]
   },
   {
     "type": "COMESTIBLE",
@@ -519,7 +610,8 @@
     "description": "Dried leaves of a tropical plant.  You can boil them into tea, or you can just eat them raw.  They aren't too filling though.",
     "price": 1030,
     "material": "veggy",
-    "volume": 1,
+    "primary_material": "dried_vegetable",
+    "volume": "250 ml",
     "flags": [ "EDIBLE_FROZEN" ],
     "charges": 20,
     "fun": -1
@@ -543,7 +635,7 @@
     "volume": "375 ml",
     "flags": [ "SMOKABLE" ],
     "smoking_result": "dry_veggy",
-    "vitamins": [ [ "vitC", 5 ], [ "iron", 1 ] ]
+    "vitamins": [ [ "vitC", 22 ], [ "calcium", 3 ], [ "iron", 6 ] ]
   },
   {
     "type": "COMESTIBLE",
@@ -561,19 +653,21 @@
     "material": "veggy",
     "flags": [ "TRADER_AVOID", "SMOKABLE" ],
     "smoking_result": "dry_veggy",
-    "volume": 1,
+    "volume": "250 ml",
     "//": "average of broccoli, cabbage, carrot, cattail_stalk, celery, chili_pepper, cucumber, lettuce, onion, pumpkin, raw_dandelion, rhubarb, sugar_beet, tomato, zucchini",
-    "vitamins": [ [ "vitA", 4 ], [ "vitC", 9 ], [ "calcium", 1 ], [ "iron", 1 ] ]
+    "vitamins": [ [ "vitA", 16 ], [ "vitC", 36 ], [ "calcium", 4 ], [ "iron", 4 ] ]
   },
   {
     "type": "COMESTIBLE",
     "id": "veggy_tainted",
+    "//": "Note: Legacy item ID, this is not actually a vegetable at all anymore.",
     "category": "other",
-    "name": "tainted veggie",
+    "name": "alien fungus chunk",
     "copy-from": "veggy",
-    "spoils_in": "10 hours",
+    "looks_like": "mushroom",
+    "spoils_in": "40 hours",
     "use_action": "POISON",
-    "description": "Vegetable that looks poisonous.  You could eat it, but it will poison you.",
+    "description": "This is a chunk of fungal matter from some sort of alien mushroom creature.  Eating unfamiliar mushrooms is a bad idea.",
     "price": 0,
     "smoking_result": "dry_veggy_tainted"
   },
@@ -602,10 +696,10 @@
     "description": "A tasty summer squash.",
     "price": 300,
     "material": "veggy",
-    "volume": 1,
+    "volume": "250 ml",
     "flags": [ "EATEN_HOT", "SMOKABLE" ],
     "smoking_result": "dry_veggy",
-    "vitamins": [ [ "vitC", 9 ], [ "iron", 1 ] ]
+    "vitamins": [ [ "vitC", 39 ], [ "calcium", 3 ], [ "iron", 4 ] ]
   },
   {
     "type": "COMESTIBLE",
@@ -620,7 +714,49 @@
     "color": "magenta",
     "symbol": ",",
     "material": [ "veggy" ],
-    "volume": 1,
+    "volume": "250 ml",
     "price": 0
+  },
+  {
+    "type": "COMESTIBLE",
+    "id": "raw_beans",
+    "name": "raw beans",
+    "name_plural": "raw beans",
+    "color": "brown",
+    "spoils_in": "2 days",
+    "comestible_type": "FOOD",
+    "weight": 194,
+    "symbol": "%",
+    "healthy": -2,
+    "calories": 56,
+    "description": "Raw, uncooked beans.  They are mildly toxic in this form, but you could cook them to make them tasty.",
+    "price": 90,
+    "material": "veggy",
+    "fun": -1,
+    "cooks_like": "beans_cooked",
+    "flags": [ "SMOKABLE", "NUTRIENT_OVERRIDE" ],
+    "smoking_result": "dry_beans",
+    "vitamins": [ [ "iron", 2 ], [ "vitC", 20 ] ]
+  },
+  {
+    "type": "COMESTIBLE",
+    "id": "raw_lentils",
+    "name": "raw lentils",
+    "name_plural": "raw lentils",
+    "color": "light_green",
+    "spoils_in": "2 days",
+    "comestible_type": "FOOD",
+    "weight": 194,
+    "symbol": "%",
+    "healthy": -2,
+    "calories": 42,
+    "description": "Raw, uncooked lentils.  They could be cooked.",
+    "price": 90,
+    "material": "veggy",
+    "fun": -1,
+    "cooks_like": "lentils_cooked",
+    "flags": [ "SMOKABLE" ],
+    "smoking_result": "dry_lentils",
+    "vitamins": [ [ "calcium", 2 ], [ "iron", 3 ], [ "vitC", 1 ], [ "vitB", 1 ] ]
   }
 ]

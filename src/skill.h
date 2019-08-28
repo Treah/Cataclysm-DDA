@@ -6,25 +6,26 @@
 #include <map>
 #include <set>
 #include <vector>
+#include <string>
 
 #include "calendar.h"
 #include "string_id.h"
+#include "translations.h"
+#include "type_id.h"
 
 class JsonObject;
 class JsonIn;
 class JsonOut;
-class Skill;
 class recipe;
 class item;
-using skill_id = string_id<Skill>;
 
 class Skill
 {
         friend class string_id<Skill>;
         skill_id _ident;
 
-        std::string _name;
-        std::string _description;
+        translation _name;
+        translation _description;
         std::set<std::string> _tags;
         // these are not real skills, they depend on context
         static std::map<skill_id, Skill> contextual_skills;
@@ -42,24 +43,24 @@ class Skill
             std::function<bool ( const Skill &, const Skill & )> pred );
 
         Skill();
-        Skill( skill_id ident, std::string name, std::string description,
-               std::set<std::string> tags );
+        Skill( const skill_id &ident, const translation &name, const translation &description,
+               const std::set<std::string> &tags );
 
         const skill_id &ident() const {
             return _ident;
         }
-        const std::string &name() const {
-            return _name;
+        std::string name() const {
+            return _name.translated();
         }
-        const std::string &description() const {
-            return _description;
+        std::string description() const {
+            return _description.translated();
         }
 
         bool operator==( const Skill &b ) const {
             return this->_ident == b._ident;
         }
         bool operator< ( const Skill &b ) const {
-            return this->_ident <  b._ident;    // Only here for the benefit of std::map<Skill,T>
+            return this->_ident < b._ident;    // Only here for the benefit of std::map<Skill,T>
         }
 
         bool operator!=( const Skill &b ) const {
@@ -74,12 +75,12 @@ class SkillLevel
 {
         int _level = 0;
         int _exercise = 0;
-        time_point _lastPracticed = calendar::time_of_cataclysm;
+        time_point _lastPracticed = calendar::turn_zero;
         bool _isTraining = true;
         int _highestLevel = 0;
 
     public:
-        SkillLevel() {}
+        SkillLevel() = default;
 
         bool isTraining() const {
             return _isTraining;
@@ -124,43 +125,43 @@ class SkillLevel
             return this->_level == b._level && this->_exercise == b._exercise;
         }
         bool operator< ( const SkillLevel &b ) const {
-            return this->_level <  b._level || ( this->_level == b._level && this->_exercise < b._exercise );
+            return this->_level < b._level || ( this->_level == b._level && this->_exercise < b._exercise );
         }
         bool operator> ( const SkillLevel &b ) const {
-            return this->_level >  b._level || ( this->_level == b._level && this->_exercise > b._exercise );
+            return this->_level > b._level || ( this->_level == b._level && this->_exercise > b._exercise );
         }
 
         bool operator==( const int &b ) const {
             return this->_level == b;
         }
         bool operator< ( const int &b ) const {
-            return this->_level <  b;
+            return this->_level < b;
         }
         bool operator> ( const int &b ) const {
-            return this->_level >  b;
+            return this->_level > b;
         }
 
         bool operator!=( const SkillLevel &b ) const {
             return !( *this == b );
         }
         bool operator<=( const SkillLevel &b ) const {
-            return !( *this >  b );
+            return !( *this > b );
         }
         bool operator>=( const SkillLevel &b ) const {
-            return !( *this <  b );
+            return !( *this < b );
         }
 
         bool operator!=( const int &b ) const {
             return !( *this == b );
         }
         bool operator<=( const int &b ) const {
-            return !( *this >  b );
+            return !( *this > b );
         }
         bool operator>=( const int &b ) const {
-            return !( *this <  b );
+            return !( *this < b );
         }
 
-        void serialize( JsonOut &jsout ) const;
+        void serialize( JsonOut &json ) const;
         void deserialize( JsonIn &jsin );
 };
 

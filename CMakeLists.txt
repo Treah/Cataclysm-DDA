@@ -8,8 +8,9 @@ SET(CMAKE_MODULE_PATH
     ${CMAKE_SOURCE_DIR}/CMakeModules
 )
 
+SET(CMAKE_TLS_VERIFY ON)
+
 # Build options
-option(LUA          "Lua support (required for some mods)."					"OFF")
 option(TILES        "Build graphical tileset version."						"OFF")
 option(CURSES       "Build curses version."							"ON" )
 option(SOUND        "Support for in-game sounds & music."					"OFF")
@@ -18,9 +19,11 @@ option(USE_HOME_DIR "Use user's home directory for save files."					"ON" )
 option(LOCALIZE     "Support for language localizations. Also enable UTF support."		"ON" )
 option(LANGUAGES    "Compile localization files for specified languages."			""   )
 option(DYNAMIC_LINKING "Use dynamic linking. Or use static to remove MinGW dependency instead."	"ON")
-option(LUA_BINARY   "Lua binary name or path. You can try to use luajit for extra speed."	"")
-option(GIT_BINARY   "Git binary name or path."							"")
-OPTION(PREFIX       "Location of Data,GFX, & Lua directories"                                   "")
+option(CATA_CLANG_TIDY_PLUGIN "Build Cata's custom clang-tidy plugin" "OFF")
+set(CATA_CLANG_TIDY_INCLUDE_DIR "" CACHE STRING "Path to internal clang-tidy headers required for plugin (e.g. ClangTidy.h)")
+set(CATA_CHECK_CLANG_TIDY "" CACHE STRING "Path to check_clang_tidy.py for plugin tests")
+set(GIT_BINARY       "" CACHE STRING "Git binary name or path.")
+set(PREFIX           "" CACHE STRING "Location of Data & GFX directories")
 
 include(CTest)
 
@@ -35,7 +38,7 @@ MESSAGE("   \\     \\____ / __ \\_ |  |   / __ \\_\\  \\___ |  |__ \\___  | \\__
 MESSAGE("    \\______  /\(____  / |__|  \(____  / \\___  >|____/ / ____|/____  >|__|_|  /    ")
 MESSAGE("           \\/      \\/             \\/      \\/        \\/          \\/       \\/     ")
 MESSAGE("                               --= Dark Days Ahead =--")
-MESSAGE("\n * http://en.cataclysmdda.com/\n")
+MESSAGE("\n * https://cataclysmdda.org/\n")
 
 MESSAGE(STATUS "${PROJECT} build environment -- \n")
 
@@ -140,10 +143,6 @@ ENDIF (${CMAKE_SYSTEM_NAME} MATCHES Windows)
 MESSAGE(STATUS "${PROJECT_NAME} build options --\n")
 
 # Preset variables
-IF (NOT LUA_BINARY)
-	SET (LUA_BINARY "lua")
-ENDIF (NOT LUA_BINARY)
-
 IF(NOT LANGUAGES)
 	SET (LANGUAGES de es_AR es_ES fr it_IT ja ko pt_BR ru zh_CN zh_TW)
 ENDIF(NOT LANGUAGES)
@@ -192,16 +191,12 @@ ELSE (CMAKE_BUILD_TYPE STREQUAL Debug)
 	MESSAGE(STATUS "PIXMAPS_UNITY_ENTRY_PATH      : ${PIXMAPS_UNITY_ENTRY_PATH}")
 	MESSAGE(STATUS "MANPAGE_ENTRY_PATH            : ${MANPAGE_ENTRY_PATH}\n")
 	ADD_DEFINITIONS(-DRELEASE)
-    # Use PREFIX as storage of data,gfx,lua etc.. Usefull only on *nix OS.
+    # Use PREFIX as storage of data,gfx, etc.. Usefull only on *nix OS.
     IF (PREFIX AND NOT WIN32)
 	    ADD_DEFINITIONS(-DDATA_DIR_PREFIX)
     ENDIF (PREFIX AND NOT WIN32)
 ENDIF (CMAKE_BUILD_TYPE STREQUAL Debug)
 
-	MESSAGE(STATUS "LUA                           : ${LUA}")
-IF (LUA)
-	MESSAGE(STATUS "LUA_BINARY                    : ${LUA_BINARY}")
-ENDIF (LUA)
 	MESSAGE(STATUS "GIT_BINARY                    : ${GIT_EXECUTABLE}")
 	MESSAGE(STATUS "DYNAMIC_LINKING               : ${DYNAMIC_LINKING}")
 	MESSAGE(STATUS "TILES                         : ${TILES}")
@@ -222,8 +217,16 @@ IF(MSVC)
 		add_definitions(-D_X86_)
 	endif()
 ELSE()
-	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wextra -Wall -std=c++11")
-	SET(CMAKE_CXX_FLAGS_DEBUG "-Og -g -D_GLIBCXX_DEBUG")
+	SET(CATA_WARNINGS
+		"-Werror -Wall -Wextra \
+		-Wmissing-declarations \
+		-Wold-style-cast \
+		-Woverloaded-virtual \
+		-Wpedantic")
+	# Compact the whitespace in the warning string
+	string(REGEX REPLACE "[\t ]+" " " CATA_WARNINGS "${CATA_WARNINGS}")
+	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CATA_WARNINGS} -std=c++14")
+	SET(CMAKE_CXX_FLAGS_DEBUG "-Og -g")
 ENDIF()
 
 # Force out-of-source build
@@ -309,16 +312,6 @@ IF(SOUND)
 	ENDIF(NOT SDL2_MIXER_FOUND)
 ENDIF(SOUND)
 
-IF(LUA)
-	FIND_PACKAGE(Lua)
-	IF(NOT LUA_FOUND)
-	MESSAGE(FATAL_ERROR
-		"You need the Lua development library to be able to compile with Lua support.\nSee INSTALL file for details and more info\n"
-	)
-	ENDIF(NOT LUA_FOUND)
-	ADD_DEFINITIONS(-DLUA)
-ENDIF(LUA)
-
 IF(BACKTRACE)
 	ADD_DEFINITIONS(-DBACKTRACE)
 ENDIF(BACKTRACE)
@@ -347,17 +340,15 @@ IF(USE_HOME_DIR)
 	ADD_DEFINITIONS(-DUSE_HOME_DIR)
 ENDIF(USE_HOME_DIR)
 
-IF(LUA)
-	add_subdirectory(lua)
-	add_subdirectory(src/lua)
-ENDIF(LUA)
-
 add_subdirectory(src)
 add_subdirectory(data)
 if (NOT MSVC)
 	add_subdirectory(src/chkjson)
 endif()
 add_subdirectory(tests)
+if (CATA_CLANG_TIDY_PLUGIN)
+	add_subdirectory(tools/clang-tidy-plugin)
+endif()
 
 CONFIGURE_FILE(
 	"${CMAKE_CURRENT_SOURCE_DIR}/cmake_uninstall.cmake.in"

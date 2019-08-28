@@ -6,7 +6,7 @@
     "name_plural": "Guns n Ammo",
     "description": "Reviews of firearms, and various useful tips about their use.",
     "weight": 60,
-    "volume": 1,
+    "volume": "250 ml",
     "price": 480,
     "material": [ "paper" ],
     "symbol": "?",
@@ -14,7 +14,7 @@
     "skill": "gun",
     "max_level": 1,
     "intelligence": 2,
-    "time": 7,
+    "time": "7 m",
     "fun": 1
   },
   {
@@ -23,7 +23,7 @@
     "name": "The Gun Owner's Handbook",
     "description": "A thick soft-cover book that claims to be a complete guide to safely operating, maintaining, and repairing firearms.",
     "weight": 462,
-    "volume": 2,
+    "volume": "500 ml",
     "price": 3800,
     "material": [ "paper" ],
     "symbol": "?",
@@ -31,7 +31,7 @@
     "skill": "gun",
     "max_level": 3,
     "intelligence": 3,
-    "time": 15
+    "time": "15 m"
   },
   {
     "id": "pocket_firearms",
@@ -40,7 +40,7 @@
     "name_plural": "Pocket Guides to Firearm Safety",
     "description": "This pocket-sized leather-bound guide to firearm safety combines a wealth of concise information with simple to follow instructions and easy to read illustrations.",
     "weight": 226,
-    "volume": 1,
+    "volume": "250 ml",
     "price": 4000,
     "material": [ "paper", "leather" ],
     "symbol": "?",
@@ -48,6 +48,6 @@
     "skill": "gun",
     "max_level": 2,
     "intelligence": 6,
-    "time": 20
+    "time": "20 m"
   }
 ]

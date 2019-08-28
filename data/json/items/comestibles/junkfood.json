@@ -14,11 +14,11 @@
     "description": "Dry toaster pastries usually coated with solid frosting and what luck!  These are strawberry flavored!",
     "price": 400,
     "material": [ "wheat", "junk" ],
-    "volume": 5,
+    "volume": "1 L",
     "charges": 8,
     "flags": [ "EATEN_HOT" ],
-    "vitamins": [ [ "iron", 2 ] ],
-    "fun": 25
+    "vitamins": [ [ "vitA", 3 ], [ "iron", 10 ] ],
+    "fun": 20
   },
   {
     "type": "COMESTIBLE",
@@ -26,7 +26,7 @@
     "name": "toast-em",
     "copy-from": "toastem",
     "description": "Dry toaster pastries, usually coated with solid frosting, these are blueberry flavored!",
-    "fun": 18
+    "fun": 15
   },
   {
     "type": "COMESTIBLE",
@@ -52,11 +52,11 @@
     "description": "A delicious fruit-filled pastry that you can cook in your toaster.  It even comes with frosting!  Cook it to make it tasty.",
     "price": 400,
     "material": [ "wheat", "junk" ],
-    "volume": 1,
+    "volume": "250 ml",
     "charges": 2,
     "flags": [ "EATEN_HOT" ],
     "fun": -10,
-    "vitamins": [ [ "vitA", 4 ], [ "iron", 2 ] ]
+    "vitamins": [ [ "vitA", 16 ], [ "iron", 10 ] ]
   },
   {
     "type": "COMESTIBLE",
@@ -66,7 +66,7 @@
     "copy-from": "toasterpastryfrozen",
     "quench": 4,
     "description": "A delicious fruit-filled pastry that you've cooked.  It even comes with frosting!",
-    "fun": 30
+    "fun": 20
   },
   {
     "type": "COMESTIBLE",
@@ -101,7 +101,7 @@
     "description": "Dried kernels from a particular type of corn.  Practically inedible raw, they can be cooked to make a tasty snack.",
     "price": 100,
     "material": "junk",
-    "volume": 1,
+    "volume": "250 ml",
     "flags": [ "EDIBLE_FROZEN" ],
     "fun": -6
   },
@@ -122,9 +122,10 @@
     "description": "Plain and unseasoned popcorn.  Not as tasty as other kinds, but healthier as a result.",
     "price": 115,
     "material": "veggy",
-    "volume": 1,
+    "volume": "250 ml",
     "flags": [ "EATEN_HOT", "FREEZERBURN" ],
-    "fun": 4
+    "fun": 4,
+    "vitamins": [ [ "iron", 2 ] ]
   },
   {
     "type": "COMESTIBLE",
@@ -165,10 +166,10 @@
     "description": "A salty treat of a snack.",
     "price": 185,
     "material": [ "wheat", "junk" ],
-    "volume": 1,
+    "volume": "250 ml",
     "flags": [ "EDIBLE_FROZEN" ],
     "charges": 3,
-    "vitamins": [ [ "iron", 4 ] ],
+    "vitamins": [ [ "iron", 16 ] ],
     "fun": 4
   },
   {
@@ -186,7 +187,7 @@
     "description": "A salty treat of a snack, covered in chocolate.",
     "price": 200,
     "material": [ "wheat", "junk" ],
-    "volume": 2,
+    "volume": "500 ml",
     "flags": [ "EDIBLE_FROZEN" ],
     "charges": 3,
     "fun": 6
@@ -206,7 +207,7 @@
     "description": "Chocolate isn't very healthy, but it does make a delicious treat.",
     "price": 130,
     "material": "junk",
-    "volume": 1,
+    "volume": "250 ml",
     "charges": 3,
     "flags": [ "EDIBLE_FROZEN" ],
     "fun": 10
@@ -226,7 +227,7 @@
     "description": "A handful of squishy, fluffy, puffy, delicious marshmallows.",
     "price": 250,
     "material": "junk",
-    "volume": 1,
+    "volume": "250 ml",
     "flags": [ "EDIBLE_FROZEN" ],
     "fun": 10
   },
@@ -246,10 +247,10 @@
     "description": "A pair of graham crackers with some chocolate and a marshmallow between them.",
     "price": 400,
     "material": [ "wheat", "junk" ],
-    "volume": 1,
+    "volume": "250 ml",
     "flags": [ "EDIBLE_FROZEN" ],
-    "vitamins": [ [ "iron", 1 ], [ "calcium", 1 ] ],
-    "fun": 30
+    "vitamins": [ [ "calcium", 4 ], [ "iron", 6 ] ],
+    "fun": 20
   },
   {
     "type": "COMESTIBLE",
@@ -269,7 +270,7 @@
     "description": "A handful of peanut butter cups...  your favorite!",
     "price": 180,
     "material": "junk",
-    "volume": 1,
+    "volume": "250 ml",
     "flags": [ "EDIBLE_FROZEN" ],
     "charges": 3,
     "fun": 4
@@ -291,10 +292,10 @@
     "description": "A handful of colorful chocolate filled candies.",
     "price": 180,
     "material": "junk",
-    "volume": 1,
+    "volume": "250 ml",
     "flags": [ "EDIBLE_FROZEN" ],
     "charges": 3,
-    "vitamins": [ [ "iron", 2 ] ],
+    "vitamins": [ [ "iron", 9 ] ],
     "fun": 3
   },
   {
@@ -314,7 +315,7 @@
     "description": "A handful of colorful fruit-flavored chewy candy.",
     "price": 180,
     "material": "junk",
-    "volume": 1,
+    "volume": "250 ml",
     "flags": [ "EDIBLE_FROZEN" ],
     "charges": 3,
     "fun": 3
@@ -336,7 +337,7 @@
     "description": "Thin paper tubes of sweet & sour candy powder.  Who thinks of this stuff?",
     "price": 120,
     "material": "junk",
-    "volume": 1,
+    "volume": "250 ml",
     "flags": [ "EDIBLE_FROZEN" ],
     "charges": 5,
     "fun": 6
@@ -380,10 +381,10 @@
     "description": "Dry and sugary, these crackers will leave you thirsty, but go good with some chocolate and marshmallows.",
     "price": 110,
     "material": [ "wheat", "junk" ],
-    "volume": 3,
+    "volume": "750 ml",
     "flags": [ "EDIBLE_FROZEN" ],
     "charges": 8,
-    "vitamins": [ [ "iron", 1 ], [ "calcium", 1 ] ],
+    "vitamins": [ [ "calcium", 4 ], [ "iron", 6 ] ],
     "fun": 2
   },
   {
@@ -401,11 +402,11 @@
     "description": "Sweet and delicious cookies, just like grandma used to bake.",
     "price": 195,
     "material": [ "wheat", "junk" ],
-    "volume": 1,
+    "volume": "250 ml",
     "charges": 4,
     "flags": [ "EDIBLE_FROZEN" ],
     "stack_size": 20,
-    "vitamins": [ [ "iron", 1 ] ],
+    "vitamins": [ [ "calcium", 2 ], [ "iron", 6 ] ],
     "fun": 7
   },
   {
@@ -423,10 +424,11 @@
     "description": "Boiling the sap of a maple tree has concentrated it into sweet, delicious maple syrup.",
     "price": 600,
     "material": "junk",
-    "volume": 1,
+    "volume": "250 ml",
     "phase": "liquid",
     "charges": 16,
     "fun": 5,
+    "vitamins": [ [ "calcium", 2 ] ],
     "freezing_point": -70
   },
   {
@@ -444,9 +446,9 @@
     "description": "A thick syrup produced from shredded sugar beets.  Useful in cooking as a sweetener.",
     "price": 1500,
     "material": "junk",
-    "volume": 1,
+    "volume": "250 ml",
     "phase": "liquid",
-    "vitamins": [ [ "iron", 8 ] ],
+    "vitamins": [ [ "iron", 34 ] ],
     "charges": 16
   },
   {
@@ -461,10 +463,10 @@
     "description": "Delicious sponge cake with buttercream icing, it says happy birthday on it.",
     "price": 120,
     "material": [ "wheat", "junk" ],
-    "volume": 8,
+    "volume": "2 L",
     "charges": 12,
-    "vitamins": [ [ "iron", 1 ] ],
-    "fun": 20
+    "vitamins": [ [ "calcium", 3 ], [ "iron", 6 ] ],
+    "fun": 15
   },
   {
     "type": "COMESTIBLE",
@@ -482,7 +484,7 @@
     "stim": 8,
     "quench": -5,
     "description": "A cake coated in the thickest icing you've ever seen.  Someone has written guff in quotation marks on it...",
-    "fun": 30
+    "fun": 20
   },
   {
     "type": "COMESTIBLE",
@@ -503,7 +505,7 @@
     "description": "Roasted coffee beans coated with dark chocolate, natural source of concentrated caffeine.",
     "price": 300,
     "material": [ "veggy", "junk" ],
-    "volume": 1,
+    "volume": "250 ml",
     "charges": 5,
     "stack_size": 30,
     "fun": 2,
@@ -525,9 +527,9 @@
     "description": "Fast-food fried potatoes.  Somehow, they're still edible.",
     "price": 120,
     "material": "junk",
-    "volume": 1,
+    "volume": "250 ml",
     "fun": 4,
-    "vitamins": [ [ "vitC", 1 ] ],
+    "vitamins": [ [ "vitC", 4 ], [ "calcium", 1 ], [ "iron", 3 ] ],
     "flags": [ "EATEN_HOT" ]
   },
   {
@@ -557,7 +559,7 @@
     "description": "A handful of soft chocolate-covered peppermint patties...  yum!",
     "price": 130,
     "material": "junk",
-    "volume": 1,
+    "volume": "250 ml",
     "flags": [ "EDIBLE_FROZEN" ],
     "charges": 3,
     "fun": 4
@@ -565,8 +567,9 @@
   {
     "type": "COMESTIBLE",
     "id": "neccowafers",
-    "name": "Necco wafer",
-    "weight": 46,
+    "name": "Necco wafers",
+    "name_plural": "Necco wafers",
+    "weight": 60,
     "color": "magenta",
     "spoils_in": "180 days",
     "stim": 1,
@@ -579,7 +582,7 @@
     "description": "A handful of candy wafers, in assorted flavors: orange, lemon, lime, clove, chocolate, wintergreen, cinnamon, and licorice.  Yum!",
     "price": 100,
     "material": "junk",
-    "volume": 0,
+    "volume": "40 ml",
     "flags": [ "EDIBLE_FROZEN" ],
     "fun": 4
   },
@@ -600,7 +603,7 @@
     "description": "Candy sticks.  Slightly more healthy than tobacco cigarettes, but with no possibility of addiction.",
     "price": 130,
     "material": "junk",
-    "volume": 1,
+    "volume": "250 ml",
     "flags": [ "EDIBLE_FROZEN" ],
     "charges": 3,
     "fun": 4
@@ -622,9 +625,9 @@
     "description": "Some caramel.  Still bad for your health.",
     "price": 150,
     "material": "junk",
-    "volume": 1,
+    "volume": "250 ml",
     "charges": 5,
-    "vitamins": [ [ "calcium", 2 ], [ "vitB", 1 ] ],
+    "vitamins": [ [ "calcium", 9 ], [ "vitB", 8 ] ],
     "fun": 2
   },
   {
@@ -643,10 +646,10 @@
     "description": "Betcha can't eat just one.",
     "price": 180,
     "material": "junk",
-    "volume": 1,
+    "volume": "250 ml",
     "flags": [ "EDIBLE_FROZEN" ],
     "charges": 3,
-    "vitamins": [ [ "vitC", 5 ], [ "iron", 1 ] ],
+    "vitamins": [ [ "vitC", 7 ], [ "calcium", 1 ], [ "iron", 2 ] ],
     "fun": 6
   },
   {
@@ -665,9 +668,9 @@
     "description": "Sugary breakfast cereal with marshmallows.  It takes you back to your childhood.",
     "price": 400,
     "material": "junk",
-    "volume": 1,
+    "volume": "250 ml",
     "flags": [ "EDIBLE_FROZEN" ],
-    "vitamins": [ [ "vitA", 5 ], [ "vitC", 4 ], [ "calcium", 3 ], [ "iron", 12 ] ],
+    "vitamins": [ [ "vitA", 21 ], [ "vitC", 17 ], [ "calcium", 13 ], [ "iron", 48 ] ],
     "fun": 10
   },
   {
@@ -686,9 +689,9 @@
     "description": "Plain cornflake cereal.  They're not that good, but it beats nothing.",
     "price": 300,
     "material": "junk",
-    "volume": 1,
+    "volume": "250 ml",
     "flags": [ "EDIBLE_FROZEN" ],
-    "vitamins": [ [ "iron", 10 ] ],
+    "vitamins": [ [ "iron", 42 ] ],
     "fun": 6
   },
   {
@@ -707,9 +710,9 @@
     "description": "Salted chips made from corn tortillas, could really use some cheese, maybe some beef.",
     "price": 170,
     "material": "junk",
-    "volume": 1,
+    "volume": "250 ml",
     "flags": [ "EDIBLE_FROZEN" ],
-    "vitamins": [ [ "calcium", 1 ] ],
+    "vitamins": [ [ "calcium", 5 ], [ "iron", 3 ] ],
     "fun": 8
   },
   {
@@ -728,10 +731,11 @@
     "description": "Salted chips made from corn tortillas, now with cheese.  Could stand to have some meat.",
     "price": 250,
     "material": [ "junk", "milk" ],
-    "volume": 1,
+    "primary_material": "wheat",
+    "volume": "250 ml",
     "flags": [ "EATEN_HOT" ],
     "fun": 16,
-    "vitamins": [ [ "calcium", 3 ], [ "iron", 1 ] ]
+    "vitamins": [ [ "calcium", 12 ], [ "iron", 6 ] ]
   },
   {
     "type": "COMESTIBLE",
@@ -749,11 +753,11 @@
     "description": "Salted chips made from corn tortillas, now with meat.  Could probably use some cheese, though.",
     "price": 250,
     "material": [ "junk", "flesh" ],
-    "volume": 3,
+    "volume": "750 ml",
     "charges": 3,
     "flags": [ "EATEN_HOT" ],
     "fun": 16,
-    "vitamins": [ [ "vitC", 1 ], [ "iron", 6 ], [ "vitB", 62 ] ]
+    "vitamins": [ [ "vitC", 5 ], [ "calcium", 2 ], [ "iron", 24 ], [ "vitB", 259 ] ]
   },
   {
     "type": "COMESTIBLE",
@@ -771,7 +775,8 @@
     "name": "niño nachos with cheese",
     "name_plural": "niño nachos with cheese",
     "description": "Salted chips made from corn tortillas with human flesh and smothered in cheese.  Delicious.",
-    "material": [ "hflesh", "milk", "junk" ]
+    "material": [ "hflesh", "milk", "junk" ],
+    "primary_material": "processed_food"
   },
   {
     "type": "COMESTIBLE",
@@ -789,10 +794,11 @@
     "description": "Salted chips made from corn tortillas with ground meat and smothered in cheese.  Delicious.",
     "price": 300,
     "material": [ "flesh", "milk", "junk" ],
-    "volume": 2,
+    "primary_material": "processed_food",
+    "volume": "500 ml",
     "flags": [ "EATEN_HOT" ],
     "fun": 20,
-    "vitamins": [ [ "iron", 3 ], [ "calcium", 2 ], [ "vitA", 2 ], [ "vitB", 7 ] ]
+    "vitamins": [ [ "vitA", 10 ], [ "calcium", 10 ], [ "iron", 12 ], [ "vitB", 29 ] ]
   },
   {
     "type": "COMESTIBLE",
@@ -809,47 +815,30 @@
     "description": "Salty dried pork.  Tastes good, but it will make you thirsty.",
     "price": 220,
     "material": [ "flesh", "junk" ],
-    "volume": 1,
+    "volume": "250 ml",
     "flags": [ "EDIBLE_FROZEN" ],
     "charges": 4,
-    "vitamins": [ [ "calcium", 2 ], [ "iron", 1 ] ],
+    "vitamins": [ [ "vitA", 1 ], [ "calcium", 8 ], [ "iron", 4 ] ],
     "fun": 4
   },
   {
     "type": "COMESTIBLE",
-    "id": "frozen_burrito",
-    "name": "uncooked burrito",
+    "id": "junk_burrito",
+    "name": "microwave burrito",
     "weight": 142,
     "color": "brown",
-    "spoils_in": "11 days 16 hours",
+    "spoils_in": "2 days 12 hours",
     "container": "bag_plastic",
     "comestible_type": "FOOD",
     "symbol": "%",
     "quench": -12,
     "healthy": -2,
-    "calories": 130,
-    "description": "A small, microwaveable steak & cheese burrito, like those found at gas stations.  Not as appetizing or nutritious as it would be if heated up.",
+    "calories": 434,
+    "description": "A small, microwaveable steak & cheese burrito, like those found at gas stations.",
     "price": 200,
     "material": [ "flesh", "junk", "milk" ],
-    "volume": 1,
-    "fun": -3
-  },
-  {
-    "type": "COMESTIBLE",
-    "id": "cooked_burrito",
-    "name": "cooked burrito",
-    "weight": 142,
-    "color": "brown",
-    "spoils_in": "2 days 12 hours",
-    "comestible_type": "FOOD",
-    "symbol": "%",
-    "quench": -12,
-    "healthy": -1,
-    "calories": 434,
-    "description": "A small, microwaveable steak & cheese burrito, like those found at gas stations.  It's tastier and more filling, but will also spoil quickly.",
-    "price": 90,
-    "material": [ "flesh", "junk", "milk" ],
-    "volume": 1,
+    "primary_material": "processed_food",
+    "volume": "250 ml",
     "flags": [ "EATEN_HOT" ],
     "fun": 5
   },
@@ -869,7 +858,8 @@
     "description": "Now with ONE POUND of meat and ONE POUND of carbs!  Not as appetizing or nutritious as it would be if heated up.",
     "price": 320,
     "material": [ "flesh", "junk" ],
-    "volume": 4,
+    "primary_material": "processed_food",
+    "volume": "1 L",
     "fun": -3
   },
   {
@@ -887,7 +877,8 @@
     "description": "Now with ONE POUND of meat and ONE POUND of carbs!  Nice and heated up.  It's tastier and more filling, but will also spoil quickly.",
     "price": 90,
     "material": [ "flesh", "junk" ],
-    "volume": 4,
+    "primary_material": "processed_food",
+    "volume": "1 L",
     "charges": 2,
     "flags": [ "EATEN_HOT" ],
     "fun": 2
@@ -907,10 +898,10 @@
     "description": "Chicken cooked while submerged in oil.  It's greasy and delicious.",
     "price": 550,
     "material": [ "flesh", "junk" ],
-    "volume": 4,
+    "volume": "1 L",
     "charges": 4,
     "fun": 12,
-    "vitamins": [ [ "iron", 1 ] ]
+    "vitamins": [ [ "iron", 4 ] ]
   },
   {
     "type": "COMESTIBLE",
@@ -928,11 +919,11 @@
     "description": "A hot dog, served with chili con carne as a topping.  Yum!",
     "price": 900,
     "material": [ "flesh", "junk", "wheat" ],
-    "volume": 2,
+    "volume": "500 ml",
     "charges": 2,
     "flags": [ "EATEN_HOT" ],
     "fun": 15,
-    "vitamins": [ [ "vitA", 1 ], [ "vitC", 11 ], [ "calcium", 3 ], [ "iron", 5 ] ]
+    "vitamins": [ [ "vitA", 7 ], [ "vitC", 46 ], [ "calcium", 14 ], [ "iron", 21 ] ]
   },
   {
     "type": "COMESTIBLE",
@@ -959,11 +950,11 @@
     "description": "A heavily processed sausage, dipped in batter and deep fried.  It would taste much better prepared.",
     "price": 900,
     "material": [ "flesh", "junk" ],
-    "volume": 1,
+    "volume": "250 ml",
     "charges": 2,
     "flags": [ "EATEN_HOT" ],
     "fun": -18,
-    "vitamins": [ [ "vitA", 1 ], [ "calcium", 1 ], [ "iron", 2 ], [ "vitB", 3 ] ]
+    "vitamins": [ [ "vitA", 4 ], [ "calcium", 6 ], [ "iron", 8 ], [ "vitB", 15 ] ]
   },
   {
     "type": "COMESTIBLE",
@@ -979,21 +970,18 @@
   {
     "type": "COMESTIBLE",
     "id": "choc_pancakes",
+    "copy-from": "pancakes",
     "name": "chocolate pancake",
     "name_plural": "chocolate pancakes",
     "weight": 78,
-    "color": "brown",
-    "spoils_in": "10 days",
-    "comestible_type": "FOOD",
-    "symbol": "%",
-    "calories": 2193,
+    "healthy": 0,
+    "calories": 219,
     "description": "Fluffy and delicious pancakes with real maple syrup, with delicious chocolate baked right in.",
     "price": 700,
     "material": [ "wheat", "junk", "milk" ],
-    "volume": 1,
-    "flags": [ "EATEN_HOT" ],
+    "primary_material": "processed_food",
     "fun": 6,
-    "vitamins": [ [ "vitA", 1 ], [ "calcium", 1 ], [ "iron", 4 ], [ "vitB", 8 ] ]
+    "vitamins": [ [ "vitA", 5 ], [ "calcium", 5 ], [ "iron", 17 ], [ "vitB", 33 ] ]
   },
   {
     "type": "COMESTIBLE",
@@ -1008,31 +996,33 @@
     "description": "Crunchy and delicious waffles with real maple syrup, with delicious chocolate baked right in.",
     "price": 650,
     "material": [ "wheat", "junk", "milk" ],
-    "volume": 1,
+    "primary_material": "processed_food",
+    "volume": "250 ml",
     "flags": [ "EATEN_HOT" ],
     "fun": 12,
-    "vitamins": [ [ "vitA", 1 ], [ "calcium", 6 ], [ "iron", 6 ], [ "vitB", 15 ] ]
+    "vitamins": [ [ "vitA", 7 ], [ "calcium", 25 ], [ "iron", 25 ], [ "vitB", 63 ] ]
   },
   {
     "type": "COMESTIBLE",
     "id": "can_cheese",
     "name": "cheese spread",
-    "weight": 118,
+    "weight": 30,
     "color": "yellow",
     "spoils_in": "4 days",
     "stim": 1,
     "container": "can_food",
     "comestible_type": "FOOD",
     "symbol": "%",
-    "calories": 354,
+    "calories": 89,
     "description": "Processed cheese spread.",
-    "price": 650,
+    "price": 160,
     "material": [ "milk", "junk" ],
-    "volume": 1,
-    "charges": 2,
+    "primary_material": "cheese",
+    "volume": "250 ml",
+    "charges": 8,
     "flags": [ "EATEN_HOT" ],
     "fun": 6,
-    "vitamins": [ [ "vitA", 1 ], [ "calcium", 14 ] ]
+    "vitamins": [ [ "vitA", 1 ], [ "calcium", 15 ] ]
   },
   {
     "type": "COMESTIBLE",
@@ -1050,10 +1040,11 @@
     "description": "Fried potatoes with delicious cheese smothered on top.",
     "price": 190,
     "material": [ "junk", "milk" ],
-    "volume": 1,
+    "primary_material": "cheese",
+    "volume": "250 ml",
     "flags": [ "EATEN_HOT" ],
     "fun": 6,
-    "vitamins": [ [ "vitA", 1 ], [ "vitC", 1 ], [ "calcium", 4 ] ]
+    "vitamins": [ [ "vitA", 7 ], [ "vitC", 4 ], [ "calcium", 17 ], [ "iron", 3 ] ]
   },
   {
     "type": "COMESTIBLE",
@@ -1070,10 +1061,10 @@
     "description": "Battered and fried onions.  Crunchy and delicious.",
     "price": 400,
     "material": [ "veggy", "junk" ],
-    "volume": 1,
+    "volume": "250 ml",
     "flags": [ "EATEN_HOT", "EDIBLE_FROZEN", "FREEZERBURN" ],
     "fun": 6,
-    "vitamins": [ [ "calcium", 1 ], [ "iron", 1 ] ]
+    "vitamins": [ [ "calcium", 4 ], [ "iron", 7 ] ]
   },
   {
     "type": "COMESTIBLE",
@@ -1091,10 +1082,11 @@
     "description": "A heavily processed sausage, commonplace at baseball games before the cataclysm.  It would taste much better prepared.",
     "price": 800,
     "material": [ "flesh", "junk" ],
-    "volume": 3,
+    "volume": "750 ml",
     "charges": 10,
     "flags": [ "EATEN_HOT" ],
-    "fun": -6
+    "fun": -6,
+    "vitamins": [ [ "iron", 3 ] ]
   },
   {
     "id": "hotdogs_campfire",
@@ -1123,10 +1115,10 @@
     "description": "Surprisingly, not made from dog.  Cooked, this hot dog now tastes much better, but will spoil.",
     "price": 800,
     "material": [ "flesh", "junk", "wheat" ],
-    "volume": 2,
+    "volume": "500 ml",
     "flags": [ "EATEN_HOT" ],
     "fun": 12,
-    "vitamins": [ [ "vitC", 20 ], [ "calcium", 5 ], [ "iron", 3 ] ]
+    "vitamins": [ [ "vitC", 85 ], [ "calcium", 22 ], [ "iron", 15 ] ]
   },
   {
     "type": "COMESTIBLE",
@@ -1145,10 +1137,11 @@
     "description": "Crunchy sugar in chocolate capsules.  Legal and stimmy.",
     "price": 100,
     "material": [ "junk", "milk" ],
-    "volume": 2,
+    "primary_material": "processed_food",
+    "volume": "500 ml",
     "flags": [ "EDIBLE_FROZEN" ],
     "charges": 4,
-    "vitamins": [ [ "calcium", 1 ] ],
+    "vitamins": [ [ "calcium", 4 ] ],
     "fun": 6
   }
 ]

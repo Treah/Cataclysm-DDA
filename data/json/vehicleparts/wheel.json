@@ -15,7 +15,34 @@
     "rolling_resistance": 0.375,
     "wheel_type": "rigid",
     "contact_area": 80,
-    "flags": [ "WHEEL" ]
+    "flags": [ "WHEEL" ],
+    "damage_reduction": { "all": 66 }
+  },
+  {
+    "id": "rail_wheel",
+    "type": "vehicle_part",
+    "name": "rail wheel",
+    "item": "wheel_rail",
+    "location": "under",
+    "symbol": "|",
+    "broken_symbol": "x",
+    "difficulty": 2,
+    "durability": 180,
+    "description": "A strong metal wheel.  A flange helps keep it on a rail, but makes it perform terribly when not on a rail.",
+    "damage_modifier": 70,
+    "breaks_into": [ { "item": "scrap", "count": [ 4, 6 ] }, { "item": "steel_chunk", "count": [ 2, 3 ] } ],
+    "rolling_resistance": 0.25,
+    "wheel_type": "rail",
+    "contact_area": 80,
+    "flags": [ "WHEEL", "RAIL" ],
+    "damage_reduction": { "all": 66 }
+  },
+  {
+    "id": "rail_wheel_steerable",
+    "copy-from": "rail_wheel",
+    "type": "vehicle_part",
+    "name": "rail wheel (steerable)",
+    "extend": { "flags": [ "STEERABLE" ] }
   },
   {
     "id": "roller_drum",
@@ -39,7 +66,7 @@
     "flags": [ "ARMOR", "OBSTACLE", "WHEEL", "STEERABLE" ],
     "wheel_type": "rigid",
     "contact_area": 400,
-    "damage_reduction": { "all": 10000 }
+    "damage_reduction": { "all": 280 }
   },
   {
     "id": "wheel",
@@ -62,7 +89,8 @@
     "rolling_resistance": 1,
     "wheel_type": "standard",
     "contact_area": 153,
-    "flags": [ "WHEEL" ]
+    "flags": [ "WHEEL" ],
+    "damage_reduction": { "bash": 20 }
   },
   {
     "id": "wheel_steerable",
@@ -78,7 +106,8 @@
     "name": "racing slick",
     "item": "wheel_slick",
     "wheel_type": "racing",
-    "contact_area": 180
+    "contact_area": 180,
+    "damage_reduction": { "bash": 12 }
   },
   {
     "id": "wheel_slick_steerable",
@@ -109,7 +138,8 @@
     "rolling_resistance": 0.6,
     "wheel_type": "standard",
     "contact_area": 480,
-    "flags": [ "WHEEL" ]
+    "flags": [ "WHEEL" ],
+    "damage_reduction": { "all": 60, "cut": 30, "stab": 16 }
   },
   {
     "id": "wheel_armor_steerable",
@@ -136,7 +166,8 @@
     "rolling_resistance": 1.62,
     "wheel_type": "off-road",
     "contact_area": 30,
-    "flags": [ "WHEEL", "STABLE", "TOOL_WRENCH", "STEERABLE", "FOLDABLE" ]
+    "flags": [ "WHEEL", "STABLE", "TOOL_WRENCH", "STEERABLE", "FOLDABLE" ],
+    "damage_reduction": { "bash": 10 }
   },
   {
     "id": "wheel_bicycle",
@@ -160,7 +191,8 @@
     "rolling_resistance": 0.45,
     "wheel_type": "standard",
     "contact_area": 40,
-    "flags": [ "WHEEL", "FOLDABLE", "TOOL_WRENCH" ]
+    "flags": [ "WHEEL", "FOLDABLE", "TOOL_WRENCH" ],
+    "damage_reduction": { "bash": 6 }
   },
   {
     "id": "wheel_bicycle_steerable",
@@ -230,7 +262,8 @@
     "rolling_resistance": 1.9,
     "wheel_type": "standard",
     "contact_area": 66,
-    "flags": [ "WHEEL" ]
+    "flags": [ "WHEEL" ],
+    "damage_reduction": { "bash": 10 }
   },
   {
     "id": "wheel_motorbike_steerable",
@@ -246,7 +279,8 @@
     "name": "off-road motorbike wheel",
     "item": "wheel_motorbike_or",
     "contact_area": 60,
-    "wheel_type": "off-road"
+    "wheel_type": "off-road",
+    "damage_reduction": { "bash": 10, "cut": 8, "stab": 4 }
   },
   {
     "id": "wheel_motorbike_or_steerable",
@@ -283,6 +317,31 @@
     "extend": { "flags": [ "STEERABLE" ] }
   },
   {
+    "id": "wheel_tricycle",
+    "type": "vehicle_part",
+    "name": "tricycle wheels",
+    "item": "wheel_tricycle",
+    "location": "under",
+    "symbol": "|",
+    "broken_symbol": "x",
+    "color": "dark_gray",
+    "difficulty": 0,
+    "durability": 30,
+    "description": "A set of three plastic wheels, with a larger one in the front, mounted with bolts.",
+    "damage_modifier": 50,
+    "breaks_into": [ { "item": "plastic_chunk", "count": [ 1, 3 ] } ],
+    "requirements": {
+      "install": { "time": 30000, "qualities": [ { "id": "WRENCH", "level": 1 } ] },
+      "removal": { "time": 15000, "qualities": [ { "id": "WRENCH", "level": 1 } ] },
+      "repair": { "skills": [ [ "mechanics", 1 ] ], "time": 5000, "using": [ [ "adhesive", 1 ] ] }
+    },
+    "rolling_resistance": 10,
+    "wheel_type": "standard",
+    "contact_area": 10,
+    "flags": [ "STABLE", "STEERABLE", "TOOL_WRENCH", "WHEEL" ],
+    "damage_reduction": { "bash": 8 }
+  },
+  {
     "id": "wheel_unicycle",
     "type": "vehicle_part",
     "name": "unicycle wheel",
@@ -304,7 +363,8 @@
     "rolling_resistance": 0.45,
     "wheel_type": "standard",
     "contact_area": 20,
-    "flags": [ "WHEEL", "STABLE", "FOLDABLE", "TOOL_WRENCH", "STEERABLE" ]
+    "flags": [ "WHEEL", "STABLE", "FOLDABLE", "TOOL_WRENCH", "STEERABLE" ],
+    "damage_reduction": { "bash": 8 }
   },
   {
     "id": "wheel_wheelchair",
@@ -328,7 +388,8 @@
     "rolling_resistance": 1.95,
     "wheel_type": "racing",
     "contact_area": 40,
-    "flags": [ "WHEEL", "STABLE", "FOLDABLE", "TOOL_WRENCH", "STEERABLE" ]
+    "flags": [ "WHEEL", "STABLE", "FOLDABLE", "TOOL_WRENCH", "STEERABLE" ],
+    "damage_reduction": { "bash": 6 }
   },
   {
     "id": "wheel_wide",
@@ -351,7 +412,8 @@
     "rolling_resistance": 0.575,
     "wheel_type": "standard",
     "contact_area": 360,
-    "flags": [ "WHEEL" ]
+    "flags": [ "WHEEL" ],
+    "damage_reduction": { "bash": 25 }
   },
   {
     "id": "wheel_wide_steerable",
@@ -367,7 +429,8 @@
     "name": "off-road wide wheel",
     "item": "wheel_wide_or",
     "wheel_type": "off-road",
-    "contact_area": 320
+    "contact_area": 320,
+    "damage_reduction": { "bash": 20, "cut": 15, "stab": 10 }
   },
   {
     "id": "wheel_wide_or_steerable",
@@ -398,7 +461,8 @@
     "rolling_resistance": 2.15,
     "wheel_type": "rigid",
     "contact_area": 60,
-    "flags": [ "WHEEL" ]
+    "flags": [ "WHEEL" ],
+    "damage_reduction": { "all": 14 }
   },
   {
     "id": "wheel_wood_b",
@@ -413,6 +477,7 @@
       { "item": "scrap", "count": [ 1, 2 ] }
     ],
     "rolling_resistance": 2.05,
-    "proportional": { "durability": 2, "damage_modifier": 2 }
+    "proportional": { "durability": 2, "damage_modifier": 2 },
+    "damage_reduction": { "all": 20 }
   }
 ]

@@ -3,6 +3,7 @@
 
 import json
 import os
+import itertools
 import subprocess
 from optparse import OptionParser
 from sys import platform
@@ -26,8 +27,6 @@ class WrongJSONItem(Exception):
 # there may be some non-json files in data/raw
 not_json = {os.path.normpath(i) for i in {
     "sokoban.txt",
-    "main.lua",
-    "preload.lua",
     "LOADING_ORDER.md"
 }}
 
@@ -42,7 +41,6 @@ warning_suppressed_list = {os.path.normpath(i) for i in {
     "data/json/vehicleparts/",
     "data/raw/keybindings.json",
     "data/mods/alt_map_key/overmap_terrain.json",
-    "data/mods/Arcana/monsters.json",
     "data/mods/DeoxyMod/Deoxy_vehicle_parts.json",
     "data/mods/More_Survival_Tools/start_locations.json",
     "data/mods/NPC_Traits/npc_classes.json",
@@ -64,6 +62,7 @@ ignore_files = {os.path.normpath(i) for i in {
 
 # these objects have no translatable strings
 ignorable = {
+    "behavior",
     "BULLET_PULLING",
     "city_building",
     "colordef",
@@ -77,11 +76,13 @@ ignorable = {
     "MIGRATION",
     "mod_tileset",
     "monitems",
+    "monster_adjustment",
     "MONSTER_BLACKLIST",
     "MONSTER_FACTION",
     "monstergroup",
     "MONSTER_WHITELIST",
     "mutation_type",
+    "obsolete_terrain",
     "overlay_order",
     "overmap_connection",
     "overmap_location",
@@ -92,6 +93,7 @@ ignorable = {
     "region_settings",
     "requirement",
     "rotatable_symbol",
+    "skill_boost",
     "SPECIES",
     "trait_group",
     "uncraft",
@@ -114,10 +116,12 @@ automatically_convertible = {
     "AMMO",
     "ammunition_type",
     "ARMOR",
+    "BATTERY",
     "bionic",
     "BIONIC_ITEM",
     "BOOK",
     "COMESTIBLE",
+    "construction_category",
     "CONTAINER",
     "dream",
     "ENGINE",
@@ -131,16 +135,20 @@ automatically_convertible = {
     "json_flag",
     "keybinding",
     "MAGAZINE",
+    "map_extra",
     "MOD_INFO",
     "MONSTER",
     "morale_type",
     "morale_type",
     "npc",
     "npc_class",
+    "overmap_land_use_code",
     "overmap_terrain",
+    "PET_ARMOR",
     "skill",
     "snippet",
     "speech",
+    "SPELL",
     "start_location",
     "STATIONARY_ITEM",
     "terrain",
@@ -148,7 +156,6 @@ automatically_convertible = {
     "TOOLMOD",
     "TOOL_ARMOR",
     "tool_quality",
-    "trap",
     "tutorial_messages",
     "VAR_VEH_PART",
     "vehicle",
@@ -180,6 +187,12 @@ use_format_strings = {
     "technique",
 }
 
+# For handling grammatical gender
+all_genders = ["f", "m", "n"]
+
+def gender_options(subject):
+    return [subject + ":" + g for g in all_genders]
+
 ##
 ##  SPECIALIZED EXTRACTION FUNCTIONS
 ##
@@ -193,11 +206,19 @@ def extract_bodypart(item):
     outfile = get_outfile("bodypart")
     writestr(outfile, item["name"])
     writestr(outfile, item["name"], context="bodypart_accusative")
+    if "name_plural" in item:
+        writestr(outfile, item["name_plural"])
+        writestr(outfile, item["name_plural"], context="bodypart_accusative")
     writestr(outfile, item["encumbrance_text"])
-    writestr(outfile, item["heading_singular"], item["heading_plural"])
+    writestr(outfile, item["heading_singular"])
+    writestr(outfile, item["heading_plural"])
     if "hp_bar_ui_text" in item:
         writestr(outfile, item["hp_bar_ui_text"])
 
+def extract_clothing_mod(item):
+    outfile = get_outfile("clothing_mod")
+    writestr(outfile, item["implement_prompt"])
+    writestr(outfile, item["destroy_prompt"])
 
 def extract_construction(item):
     outfile = get_outfile("construction")
@@ -491,23 +512,44 @@ def extract_recipe_group(item):
         for i in item.get("recipes"):
             writestr(outfile, i.get("description"))
 
+def extract_gendered_dynamic_line_optional(line, outfile):
+    if "gendered_line" in line:
+        msg = line["gendered_line"]
+        subjects = line["relevant_genders"]
+        options = [gender_options(subject) for subject in subjects]
+        for context_list in itertools.product(*options):
+            context = " ".join(context_list)
+            writestr(outfile, msg, context=context)
 
 def extract_dynamic_line_optional(line, member, outfile):
     if member in line:
         extract_dynamic_line(line[member], outfile)
+
+dynamic_line_string_keys = {
+# from `simple_string_conds` in `condition.h`
+    "u_male", "u_female", "npc_male", "npc_female",
+    "has_no_assigned_mission", "has_assigned_mission", "has_many_assigned_missions",
+    "has_no_available_mission", "has_available_mission", "has_many_available_missions",
+    "mission_complete", "mission_incomplete", "mission_has_generic_rewards",
+    "npc_available", "npc_following", "npc_friend", "npc_hostile",
+    "npc_train_skills", "npc_train_styles",
+    "at_safe_space", "is_day", "npc_has_activity", "is_outside", "u_has_camp",
+    "u_can_stow_weapon", "npc_can_stow_weapon", "u_has_weapon", "npc_has_weapon",
+    "u_driving", "npc_driving",
+    "has_pickup_list", "is_by_radio", "has_reason",
+# yes/no strings for complex conditions
+    "yes", "no"
+}
 
 def extract_dynamic_line(line, outfile):
     if type(line) == list:
         for l in line:
             extract_dynamic_line(l, outfile)
     elif type(line) == dict:
-        extract_dynamic_line_optional(line, "u_male", outfile)
-        extract_dynamic_line_optional(line, "u_female", outfile)
-        extract_dynamic_line_optional(line, "npc_male", outfile)
-        extract_dynamic_line_optional(line, "npc_female", outfile)
-        extract_dynamic_line_optional(line, "yes", outfile)
-        extract_dynamic_line_optional(line, "no", outfile)
-    else:
+        extract_gendered_dynamic_line_optional(line, outfile)
+        for key in dynamic_line_string_keys:
+            extract_dynamic_line_optional(line, key, outfile)
+    elif type(line) == str:
         writestr(outfile, line)
 
 def extract_talk_response(response, outfile):
@@ -522,9 +564,15 @@ def extract_talk_topic(item):
     outfile = get_outfile("talk_topic")
     if "dynamic_line" in item:
         extract_dynamic_line(item["dynamic_line"], outfile)
-    for r in item["responses"]:
-        extract_talk_response(r, outfile)
+    if "responses" in item:
+        for r in item["responses"]:
+            extract_talk_response(r, outfile)
 
+def extract_trap(item):
+    outfile = get_outfile("trap")
+    writestr(outfile, item["name"])
+    if "vehicle_data" in item and "sound" in item["vehicle_data"]:
+        writestr(outfile, item["vehicle_data"]["sound"], comment="Trap-vehicle collision message for trap '{}'".format(item["name"]))
 
 def extract_missiondef(item):
     outfile = get_outfile("mission_def")
@@ -653,10 +701,23 @@ def extract_gate(item):
         writestr(outfile, v,
                  comment="'{}' action message of some gate object.".format(k))
 
+def extract_field_type(item):
+    outfile = get_outfile("field_type")
+    for fd in item.get("intensity_levels"):
+       if "name" in fd:
+           writestr(outfile,fd.get("name"))
+            
+def extract_ter_furn_transform_messages(item):
+	outfile = get_outfile("ter_furn_transform_messages")
+	writestr(outfile,item.get("fail_message"))
+	for terrain in item.get("terrain"):
+		writestr(outfile,terrain.get("message"))
+
 # these objects need to have their strings specially extracted
 extract_specials = {
     "harvest" : extract_harvest,
     "body_part": extract_bodypart,
+    "clothing_mod": extract_clothing_mod,
     "construction": extract_construction,
     "effect_type": extract_effect_type,
     "GUN": extract_gun,
@@ -674,8 +735,12 @@ extract_specials = {
     "recipe_group": extract_recipe_group,
     "scenario": extract_scenarios,
     "talk_topic": extract_talk_topic,
+    "trap": extract_trap,
     "gate": extract_gate,
-    "vehicle_spawn": extract_vehspawn
+    "vehicle_spawn": extract_vehspawn,
+    "field_type": extract_field_type,
+    "ter_furn_transform": extract_ter_furn_transform_messages
+
 }
 
 ##
@@ -744,7 +809,7 @@ def writestr(filename, string, plural=None, context=None, format_strings=False, 
     # don't write empty strings
     if not string: return
 
-    with open(filename, 'a', encoding="utf-8") as fs:
+    with open(filename, 'a', encoding="utf-8", newline='\n') as fs:
         # Append developers comment
         if comment:
             tlcomment(fs, comment)
@@ -860,6 +925,9 @@ def extract(item, infilename):
             c = None
         writestr(outfile, item["description"], comment=c, **kwargs)
         wrote = True
+    if "detailed_definition" in item:
+        writestr(outfile, item["detailed_definition"], **kwargs)
+        wrote = True
     if "sound" in item:
         writestr(outfile, item["sound"], **kwargs)
         wrote = True
@@ -903,8 +971,8 @@ def extract(item, infilename):
        c = "Please leave anything in <angle brackets> unchanged."
        writestr(outfile, item["info"], comment=c, **kwargs)
        wrote = True
-    if "stop_phrase" in item:
-       writestr(outfile, item["stop_phrase"], **kwargs)
+    if "verb" in item:
+       writestr(outfile, item["verb"], **kwargs)
        wrote = True
     if "special_attacks" in item:
         special_attacks = item["special_attacks"]
@@ -912,7 +980,10 @@ def extract(item, infilename):
             if "description" in special_attack:
                 writestr(outfile, special_attack["description"], **kwargs)
                 wrote = True
-    if not wrote:
+    if "footsteps" in item:
+       writestr(outfile, item["footsteps"], **kwargs)
+       wrote = True
+    if not wrote and not "copy-from" in item:
         if not warning_supressed(infilename):
             print("WARNING: {}: nothing translatable found in item: {}".format(infilename, item))
 

@@ -6,7 +6,7 @@
     "name_plural": "AAA Guide",
     "description": "A tourist-centric guide to points of interest throughout the country.  Though it focuses on the north-central US, the driving sections contain some practical tips on proper driving techniques.",
     "weight": 220,
-    "volume": 2,
+    "volume": "500 ml",
     "price": 2000,
     "material": [ "paper" ],
     "symbol": "?",
@@ -14,7 +14,7 @@
     "skill": "driving",
     "max_level": 3,
     "intelligence": 6,
-    "time": 30,
+    "time": "30 m",
     "fun": 2
   },
   {
@@ -23,7 +23,7 @@
     "name": "Top Gear magazine",
     "description": "Lots of articles about cars and driving techniques.",
     "weight": 60,
-    "volume": 1,
+    "volume": "250 ml",
     "price": 450,
     "material": [ "paper" ],
     "symbol": "?",
@@ -31,7 +31,7 @@
     "skill": "driving",
     "max_level": 1,
     "intelligence": 2,
-    "time": 8,
+    "time": "8 m",
     "fun": 1
   },
   {
@@ -41,7 +41,7 @@
     "name_plural": "The Rules of the Road",
     "description": "A thick textbook for beginning drivers.  It contains chapters on laws, safe vehicle operation, and defensive driving concepts.",
     "weight": 404,
-    "volume": 2,
+    "volume": "500 ml",
     "price": 2200,
     "material": [ "paper" ],
     "symbol": "?",
@@ -49,7 +49,7 @@
     "skill": "driving",
     "max_level": 3,
     "intelligence": 5,
-    "time": 16
+    "time": "16 m"
   },
   {
     "id": "textbook_anarch",
@@ -58,7 +58,7 @@
     "name_plural": "AAA Guide",
     "description": "A tourist-centric guide to points of interest throughout the country.  This particular copy is apparently the Anonymous Anarchist's Annual: the cover conceals a wealth of ways to help stick it to The Man, along with plenty of advice for avoiding police.",
     "weight": 223,
-    "volume": 2,
+    "volume": "500 ml",
     "price": 5000,
     "material": [ "paper" ],
     "symbol": "?",
@@ -66,7 +66,7 @@
     "skill": "driving",
     "max_level": 4,
     "intelligence": 9,
-    "time": 45,
+    "time": "45 m",
     "fun": 1
   }
 ]

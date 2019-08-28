@@ -10415,7 +10415,7 @@
           "rotates": false
         },
         {
-          "id": "overlay_wielded_potato_raw",
+          "id": "overlay_wielded_potato",
           "fg": 933,
           "bg": 632,
           "rotates": false
@@ -16420,7 +16420,7 @@
           "rotates": false
         },
         {
-          "id": "overlay_wielded_potato_irradiated",
+          "id": "overlay_wielded_irradiated_potato",
           "fg": 933
         },
         {
@@ -29231,7 +29231,7 @@
           "rotates": false
         },
         {
-          "id": "cooking_oil",
+          "id": [ "cooking_oil", "cooking_oil2" ],
           "fg": 810,
           "bg": 632,
           "rotates": false
@@ -32390,7 +32390,7 @@
           "rotates": false
         },
         {
-          "id": "potato_raw",
+          "id": "potato",
           "fg": 933,
           "bg": 632,
           "rotates": false
@@ -45483,7 +45483,7 @@
           "rotates": false
         },
         {
-          "id": "potato_irradiated",
+          "id": "irradiated_potato",
           "fg": 933
         },
         {
@@ -48966,6 +48966,11 @@
           "rotates": false
         },
         {
+          "id": "highlight",
+          "fg": 1849,
+          "rotates": false
+        },
+        {
           "id": "line_target",
           "bg": 1849,
           "rotates": false
@@ -50776,15 +50781,7 @@
           "rotates": false
         },
         {
-          "id": "shotgun_trap",
-          "fg": 2602
-        },
-        {
-          "id": "tr_shotgun_2",
-          "fg": 2602
-        },
-        {
-          "id": "tr_shotgun_1",
+          "id": [ "shotgun_trap", "tr_shotgun_2", "tr_shotgun_2_1", "tr_shotgun_1" ],
           "fg": 2602
         },
         {

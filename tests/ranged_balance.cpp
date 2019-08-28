@@ -1,16 +1,28 @@
 #include <vector>
+#include <array>
+#include <list>
+#include <ostream>
+#include <string>
 
 #include "catch/catch.hpp"
 #include "ballistics.h"
 #include "dispersion.h"
-#include "game.h"
 #include "map_helpers.h"
-#include "monster.h"
 #include "npc.h"
 #include "test_statistics.h"
 #include "units.h"
+#include "bodypart.h"
+#include "calendar.h"
+#include "game_constants.h"
+#include "inventory.h"
+#include "item.h"
+#include "item_location.h"
+#include "player.h"
+#include "material.h"
+#include "type_id.h"
+#include "point.h"
 
-typedef statistics<bool> firing_statistics;
+using firing_statistics = statistics<bool>;
 
 template < class T >
 std::ostream &operator <<( std::ostream &os, const std::vector<T> &v )
@@ -42,7 +54,7 @@ static void arm_shooter( npc &shooter, const std::string &gun_type,
 {
     shooter.remove_weapon();
 
-    const itype_id gun_id( gun_type );
+    const itype_id &gun_id( gun_type );
     // Give shooter a loaded gun of the requested type.
     item &gun = shooter.i_add( item( gun_id ) );
     const itype_id ammo_id = gun.ammo_default();
@@ -69,6 +81,7 @@ static void arm_shooter( npc &shooter, const std::string &gun_type,
 static void equip_shooter( npc &shooter, const std::vector<std::string> &apparel )
 {
     const tripoint shooter_pos( 60, 60, 0 );
+    CHECK( !shooter.in_vehicle );
     shooter.setpos( shooter_pos );
     shooter.worn.clear();
     shooter.inv.clear();
@@ -195,7 +208,7 @@ static void test_fast_shooting( npc &shooter, const int moves, float hit_rate )
     CHECK( fast_stats_upper[1].avg() < hit_rate_cap );
 }
 
-void assert_encumbrance( npc &shooter, int encumbrance )
+static void assert_encumbrance( npc &shooter, int encumbrance )
 {
     for( const body_part bp : all_body_parts ) {
         INFO( "Body Part: " << body_part_name( bp ) );
@@ -236,7 +249,7 @@ TEST_CASE( "competent_shooter_accuracy", "[ranged] [balance]" )
 {
     clear_map();
     standard_npc shooter( "Shooter", {}, 5, 10, 10, 10, 10 );
-    equip_shooter( shooter, { "cloak_wool", "footrags_wool", "gloves_wraps_fur", "veil_wedding" } );
+    equip_shooter( shooter, { "cloak_wool", "footrags_wool", "gloves_wraps_fur", "glasses_safety", "balclava" } );
     assert_encumbrance( shooter, 5 );
 
     SECTION( "a skilled shooter with an accurate pistol" ) {
